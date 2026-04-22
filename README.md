@@ -4,7 +4,7 @@
 > جایگزینی سریع، امن و به‌روز برای سایت‌هایی مثل Soft98.
 
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/AyhanMansur/dowinb)
-[![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20Windows%20%7C%20Mac-blue)](https://github.com/AyhanMansur/dowinb)
+[![Platform](https://img.shields.io/badge/Platform-chrome%20%7C%20firefox%20%7C%20safari-blue)](https://github.com/AyhanMansur/dowinb)
 
 ---
 
