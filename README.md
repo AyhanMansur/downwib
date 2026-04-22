@@ -5,7 +5,6 @@
 
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen)](https://github.com/AyhanMansur/dowinb)
 [![Platform](https://img.shields.io/badge/Platform-Android%20%7C%20Windows%20%7C%20Mac-blue)](https://github.com/AyhanMansur/dowinb)
-[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
 ---
 
