@@ -1,969 +1,926 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <title>DownWib 🌿</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #0c2224;
-      color: #f5e6d3;
-      direction: rtl;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Animated gradient background */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: 
-        radial-gradient(circle at 20% 20%, rgba(210, 180, 140, 0.08), transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(205, 170, 125, 0.08), transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(222, 184, 135, 0.06), transparent 60%);
-      animation: bgShift 15s ease-in-out infinite;
-      z-index: 0;
-    }
-
-    @keyframes bgShift {
-      0%, 100% { transform: scale(1) rotate(0deg); }
-      50% { transform: scale(1.1) rotate(5deg); }
-    }
-    
-    /* Floating particles */
-    .particles {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: rgba(222, 211, 195, 0.686);
-      border-radius: 50%;
-      animation: float 20s infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
-    }
-
-    .container {
-      position: relative;
-      z-index: 2;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    /* Header */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(20px) saturate(180%);
-      background: rgba(26, 40, 94, 0.121);
-      border-bottom: 1px solid rgba(210, 180, 140, 0.2);
-    }
-
-    .header-content {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px 24px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 24px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #8cd2b7, #7ac2cd);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      position: relative;
-    }
-
-    .logo-icon {
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(135deg, #88c5cf, #72a6c9);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .logo-icon::before {
-      content: '';
-      position: absolute;
-      inset: -50%;
-      background: conic-gradient(from 0deg, transparent, rgba(245, 230, 211, 0.3), transparent);
-      animation: rotate 3s linear infinite;
-    }
-
-    @keyframes rotate {
-      to { transform: rotate(360deg); }
-    }
-
-    .search-bar {
-      flex: 1;
-      max-width: 500px;
-      margin: 0 32px;
-      position: relative;
-    }
-
-    .search-bar input {
-      width: 100%;
-      padding: 14px 48px 14px 20px;
-      border-radius: 16px;
-      border: 2px solid rgba(210, 180, 140, 0.2);
-      background: rgba(210, 180, 140, 0.05);
-      color: #f5e6d3;
-      font-size: 15px;
-      transition: all 0.3s ease;
-    }
-
-    .search-bar input:focus {
-      outline: none;
-      border-color: #d2b48c;
-      background: rgba(210, 180, 140, 0.1);
-      box-shadow: 0 0 30px rgba(210, 180, 140, 0.2);
-    }
-
-    .search-btn {
-      position: absolute;
-      left: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: linear-gradient(135deg, #d2b48c, #c19a6b);
-      border: none;
-      padding: 8px 16px;
-      border-radius: 10px;
-      color: #1a1612;
-      font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.2s ease;
-    }
-
-    .search-btn:hover {
-      transform: translateY(-50%) scale(1.05);
-    }
-
-    .header-actions {
-      display: flex;
-      gap: 12px;
-    }
-
-    .btn {
-      padding: 10px 20px;
-      border-radius: 12px;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-size: 14px;
-    }
-
-    .btn-ghost {
-      background: rgba(210, 180, 140, 0.08);
-      color: #f5e6d3;
-      border: 1px solid rgba(210, 180, 140, 0.2);
-    }
-
-    .btn-ghost:hover {
-      background: rgba(210, 180, 140, 0.15);
-      transform: translateY(-2px);
-    }
-
-    /* Hero Section */
-    .hero {
-      padding: 80px 0;
-      position: relative;
-    }
-
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-    }
-
-    .hero-content h1 {
-      font-size: clamp(40px, 5vw, 72px);
-      line-height: 1.1;
-      margin-bottom: 24px;
-      background: linear-gradient(135deg, #f5e6d3, #d2b48c, #c19a6b);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: fadeInUp 0.8s ease-out;
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-content p {
-      font-size: 18px;
-      color: rgba(210, 180, 140, 0.8);
-      margin-bottom: 32px;
-      line-height: 1.6;
-      animation: fadeInUp 0.8s ease-out 0.2s backwards;
-    }
-
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 40px;
-      animation: fadeInUp 0.8s ease-out 0.4s backwards;
-    }
-
-    .tag {
-      padding: 8px 16px;
-      border-radius: 20px;
-      background: rgba(210, 180, 140, 0.08);
-      border: 1px solid rgba(210, 180, 140, 0.2);
-      font-size: 13px;
-      color: rgba(210, 180, 140, 0.9);
-      backdrop-filter: blur(10px);
-    }
-
-    .hero-cta {
-      display: flex;
-      gap: 16px;
-      animation: fadeInUp 0.8s ease-out 0.6s backwards;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #d2b48c, #c19a6b);
-      color: #1a1612;
-      padding: 16px 32px;
-      font-size: 16px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #c19a6b, #d2b48c);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .btn-primary:hover::before {
-      opacity: 1;
-    }
-
-    .btn-primary span {
-      position: relative;
-      z-index: 1;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(210, 180, 140, 0.3);
-    }
-
-    /* Hero Visual */
-    .hero-visual {
-      position: relative;
-      height: 500px;
-      animation: fadeInUp 0.8s ease-out 0.4s backwards;
-    }
-
-    .feature-card {
-      position: absolute;
-      background: rgba(210, 180, 140, 0.05);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(210, 180, 140, 0.2);
-      border-radius: 20px;
-      padding: 24px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-8px) scale(1.02);
-      background: rgba(210, 180, 140, 0.1);
-      border-color: rgba(210, 180, 140, 0.4);
-      box-shadow: 0 20px 60px rgba(210, 180, 140, 0.2);
-    }
-
-    .feature-card:nth-child(1) {
-      top: 0;
-      right: 0;
-      width: 280px;
-      animation: float-card 6s ease-in-out infinite;
-    }
-
-    .feature-card:nth-child(2) {
-      top: 180px;
-      left: 0;
-      width: 260px;
-      animation: float-card 6s ease-in-out infinite 2s;
-    }
-
-    .feature-card:nth-child(3) {
-      bottom: 0;
-      right: 60px;
-      width: 240px;
-      animation: float-card 6s ease-in-out infinite 4s;
-    }
-
-    @keyframes float-card {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-20px); }
-    }
-
-    .feature-icon {
-      width: 48px;
-      height: 48px;
-      background: linear-gradient(135deg, #d2b48c, #c19a6b);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      margin-bottom: 16px;
-    }
-
-    .feature-card h3 {
-      font-size: 18px;
-      margin-bottom: 8px;
-      color: #f5e6d3;
-    }
-
-    .feature-card p {
-      font-size: 14px;
-      color: rgba(210, 180, 140, 0.7);
-    }
-
-    /* Stats */
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin: 80px 0;
-    }
-
-    .stat-card {
-      background: rgba(210, 180, 140, 0.05);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(210, 180, 140, 0.2);
-      border-radius: 20px;
-      padding: 32px;
-      text-align: center;
-      transition: all 0.3s ease;
-    }
-
-    .stat-card:hover {
-      transform: translateY(-4px);
-      background: rgba(210, 180, 140, 0.08);
-      border-color: rgba(210, 180, 140, 0.3);
-    }
-
-    .stat-value {
-      font-size: 48px;
-      font-weight: 800;
-      background: linear-gradient(135deg, #d2b48c, #c19a6b);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 8px;
-    }
-
-    .stat-label {
-      font-size: 16px;
-      color: rgba(210, 180, 140, 0.7);
-    }
-
-    /* Main Content */
-    .main-grid {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 32px;
-      margin-bottom: 80px;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      position: sticky;
-      top: 100px;
-      height: fit-content;
-    }
-
-    .category-section {
-      background: rgba(210, 180, 140, 0.05);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(210, 180, 140, 0.2);
-      border-radius: 20px;
-      padding: 24px;
-      margin-bottom: 24px;
-    }
-
-    .category-section h3 {
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: rgba(210, 180, 140, 0.6);
-      margin-bottom: 16px;
-    }
-
-    .category-list {
-      list-style: none;
-    }
-
-    .category-item {
-      padding: 12px 16px;
-      border-radius: 12px;
-      margin-bottom: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: rgba(210, 180, 140, 0.8);
-      font-size: 14px;
-    }
-
-    .category-item:hover {
-      background: rgba(210, 180, 140, 0.08);
-      color: #f5e6d3;
-    }
-
-    .category-item.active {
-      background: linear-gradient(135deg, rgba(210, 180, 140, 0.2), rgba(193, 154, 107, 0.2));
-      color: #f5e6d3;
-      border: 1px solid rgba(210, 180, 140, 0.3);
-    }
-
-    .category-count {
-      background: rgba(210, 180, 140, 0.15);
-      padding: 4px 8px;
-      border-radius: 8px;
-      font-size: 12px;
-    }
-
-    /* File Grid */
-    .files-section {
-      background: rgba(210, 180, 140, 0.03);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(210, 180, 140, 0.2);
-      border-radius: 20px;
-      padding: 32px;
-    }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 32px;
-    }
-
-    .section-header h2 {
-      font-size: 28px;
-      color: #f5e6d3;
-    }
-
-    .view-toggle {
-      display: flex;
-      gap: 8px;
-      background: rgba(210, 180, 140, 0.08);
-      padding: 4px;
-      border-radius: 12px;
-    }
-
-    .view-btn {
-      padding: 8px 16px;
-      border-radius: 8px;
-      background: transparent;
-      border: none;
-      color: rgba(210, 180, 140, 0.6);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .view-btn.active {
-      background: rgba(210, 180, 140, 0.2);
-      color: #f5e6d3;
-    }
-
-    .file-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 24px;
-    }
-
-    .file-card {
-      background: rgba(210, 180, 140, 0.05);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(210, 180, 140, 0.2);
-      border-radius: 16px;
-      padding: 20px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .file-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 4px;
-      background: linear-gradient(90deg, #d2b48c, #c19a6b);
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-
-    .file-card:hover::before {
-      transform: scaleX(1);
-    }
-
-    .file-card:hover {
-      transform: translateY(-4px);
-      background: rgba(210, 180, 140, 0.08);
-      border-color: rgba(210, 180, 140, 0.4);
-      box-shadow: 0 20px 40px rgba(26, 22, 18, 0.4);
-    }
-
-    .file-icon-wrapper {
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(135deg, rgba(210, 180, 140, 0.2), rgba(193, 154, 107, 0.2));
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      margin-bottom: 16px;
-      border: 1px solid rgba(210, 180, 140, 0.2);
-    }
-
-    .file-title {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: #f5e6d3;
-    }
-
-    .file-meta {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 16px;
-      font-size: 13px;
-      color: rgba(210, 180, 140, 0.6);
-    }
-
-    .file-actions {
-      display: flex;
-      gap: 8px;
-    }
-
-    .btn-download {
-      flex: 1;
-      padding: 10px;
-      background: linear-gradient(135deg, #d2b48c, #c19a6b);
-      border: none;
-      border-radius: 10px;
-      color: #1a1612;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .btn-download:hover {
-      transform: scale(1.05);
-      box-shadow: 0 5px 20px rgba(210, 180, 140, 0.3);
-    }
-
-    .btn-info {
-      width: 40px;
-      background: rgba(210, 180, 140, 0.08);
-      border: 1px solid rgba(210, 180, 140, 0.2);
-      border-radius: 10px;
-      color: #f5e6d3;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-    
-
-    .btn-info:hover {
-      background: rgba(210, 180, 140, 0.15);
-    }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-        gap: 40px;
-      }
-
-      .main-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .sidebar {
-        position: static;
-      }
-
-      .stats {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .search-bar {
-        margin: 16px 0;
-      }
-
-      .header-content {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .file-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-content h1 {
-        font-size: 36px;
-      }
-    }
-
-    /* Loading animation */
-    .loading {
-      opacity: 0;
-      animation: fadeIn 0.5s ease-out forwards;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DownWib — مرجع نرم‌افزار</title>
+<meta name="description" content="فهرست دستی از نرم‌افزارها و ابزارهایی که واقعاً استفاده می‌کنم. ویندوز، مک، اندروید، لینوکس.">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230c2224'/><rect x='18' y='22' width='64' height='8' fill='%23f5e6d3'/><rect x='18' y='40' width='40' height='6' fill='%23d2b48c'/><rect x='18' y='54' width='64' height='4' fill='%23a89c85'/><rect x='18' y='64' width='48' height='4' fill='%23a89c85'/><rect x='18' y='74' width='56' height='4' fill='%23a89c85'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   TOKENS
+   Original palette: deep teal #0c2224, cream #f5e6d3, tan #d2b48c.
+   Full-strength values instead of the original's 60% overlays, so
+   contrast is real rather than implied.
+   ============================================================ */
+:root {
+  color-scheme: dark;
+
+  --bg:      #0c2224;   /* original teal */
+  --bg-2:    #0f2729;
+  --bg-3:    #142e30;
+
+  --fg:      #f5e6d3;   /* original cream — 13.9:1 on --bg */
+  --fg-2:    #cdc2ab;   /*  9.6:1 */
+  --dim:     #9a9285;   /*  5.5:1 */
+  --faint:   #5c5a50;   /*  2.5:1 — decorative only */
+
+  --line:    #1e3a3c;
+  --line-2:  #16302f;
+
+  --accent:  #d2b48c;   /* original tan — 8.7:1 on --bg */
+  --accent-2:#c19a6b;
+
+  --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --fa:   'Vazirmatn', system-ui, -apple-system, 'Segoe UI', Tahoma, sans-serif;
+
+  --fs-xs: 0.75rem;    /* 12px */
+  --fs-sm: 0.8125rem;  /* 13px */
+  --fs-b:  0.9375rem;  /* 15px */
+  --fs-lg: 1.0625rem;  /* 17px */
+  --fs-h3: 1.125rem;
+  --fs-h2: clamp(1.5rem, 1.2rem + 1.2vw, 2rem);
+  --fs-h1: clamp(1.875rem, 1.3rem + 2.8vw, 3rem);
+
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --page:   76rem;
+  --ease:   cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color-scheme: light;
+    --bg:      #f1e8d5;   /* warm cream paper */
+    --bg-2:    #e8deca;
+    --bg-3:    #dfd4bc;
+    --fg:      #0c2224;   /* original teal becomes the ink — 15.4:1 */
+    --fg-2:    #1e3a3c;
+    --dim:     #4d5852;   /*  5.9:1 */
+    --faint:   #9c9c8c;
+    --line:    #d0c4ac;
+    --line-2:  #ddd2b9;
+    --accent:  #8a5a2e;   /*  4.9:1 */
+    --accent-2:#a87748;
+  }
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  font-family: var(--fa);
+  font-size: var(--fs-b);
+  line-height: 1.7;
+  color: var(--fg);
+  background: var(--bg);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  padding:
+    env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1, "ss01" 1;
+}
+
+.num { font-family: var(--mono); font-variant-numeric: tabular-nums; letter-spacing: 0; }
+.mono {
+  font-family: var(--mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.label {
+  font-family: var(--mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+img, svg, canvas { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+input { font: inherit; }
+
+::selection { background: var(--accent); color: var(--bg); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.skip {
+  position: absolute; top: 0; right: -9999px; z-index: 999;
+  padding: 0.75rem 1rem;
+  background: var(--accent); color: var(--bg);
+  font-family: var(--mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  text-decoration: none;
+}
+.skip:focus { right: 0; }
+
+/* ============================================================
+   MASTHEAD
+   ============================================================ */
+.masthead {
+  position: sticky; top: 0; z-index: 100;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--fg);
+}
+@supports not (backdrop-filter: blur(1px)) { .masthead { background: var(--bg); } }
+
+.masthead-inner {
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  display: flex; align-items: center; gap: 1.25rem;
+  min-height: 4rem;
+}
+
+.brand {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  text-decoration: none; color: var(--fg);
+  min-height: 44px;
+  flex-shrink: 0;
+}
+.brand-mark {
+  width: 22px; height: 22px;
+  display: grid; place-items: center;
+  background: var(--fg);
+  color: var(--bg);
+  font-family: var(--mono); font-size: 12px; font-weight: 500;
+}
+.brand-name {
+  font-family: var(--mono); font-size: var(--fs-sm); font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase;
+}
+
+.search {
+  position: relative;
+  flex: 1;
+  max-width: 32rem;
+  margin-inline: auto 0;
+}
+.search input {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  font-family: var(--fa);
+  font-size: var(--fs-b);
+  color: var(--fg);
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 0;
+  transition: border-color 0.15s var(--ease), background-color 0.15s var(--ease);
+}
+html[dir="rtl"] .search input { padding: 0.5rem 1rem 0.5rem 2.5rem; }
+.search input:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--bg);
+}
+.search input::placeholder { color: var(--faint); }
+.search-icon {
+  position: absolute;
+  top: 50%; transform: translateY(-50%);
+  width: 14px; height: 14px;
+  stroke: var(--dim); stroke-width: 2; fill: none;
+  pointer-events: none;
+}
+html[dir="rtl"] .search-icon { left: 0.875rem; }
+html:not([dir="rtl"]) .search-icon { right: 0.875rem; }
+
+.masthead-meta {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--mono); font-size: var(--fs-xs);
+  letter-spacing: 0.06em;
+  color: var(--dim);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.masthead-meta .dot {
+  width: 6px; height: 6px; background: var(--accent);
+  flex-shrink: 0;
+}
+
+@media (max-width: 780px) {
+  .masthead-inner { flex-wrap: wrap; padding-block: 0.75rem; gap: 0.75rem; }
+  .search { order: 3; flex-basis: 100%; max-width: none; margin: 0; }
+  .masthead-meta { display: none; }
+}
+
+/* ============================================================
+   PAGE
+   ============================================================ */
+.page {
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ============================================================
+   INTRO
+   ============================================================ */
+.intro {
+  padding-block: clamp(2.5rem, 6vw, 4rem) clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid var(--line);
+}
+
+.intro-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: end;
+}
+@media (max-width: 820px) {
+  .intro-grid { grid-template-columns: 1fr; gap: 2rem; align-items: start; }
+}
+
+.kicker {
+  display: inline-flex; align-items: baseline; gap: 0.5rem;
+  font-family: var(--mono); font-size: var(--fs-xs);
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.25rem;
+}
+.kicker::before { content: '['; }
+.kicker::after  { content: ']'; }
+
+.display {
+  font-family: var(--fa);
+  font-weight: 700;
+  font-size: var(--fs-h1);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  margin-bottom: 1rem;
+  text-wrap: balance;
+}
+.display span { color: var(--accent); }
+
+.lede {
+  font-size: var(--fs-lg);
+  line-height: 1.65;
+  color: var(--fg-2);
+  max-width: 46ch;
+  text-wrap: pretty;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--fg);
+  border-bottom: 1px solid var(--line);
+}
+.stats > div {
+  padding: 0.875rem 0;
+  text-align: start;
+}
+.stats > div + div {
+  border-inline-start: 1px solid var(--line);
+  padding-inline-start: 1rem;
+}
+.stats dt {
+  font-family: var(--mono); font-size: var(--fs-xs);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 0.35rem;
+}
+.stats dd {
+  font-family: var(--mono);
+  font-size: 1.375rem; font-weight: 500;
+  color: var(--fg);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+/* ============================================================
+   CATALOG
+   ============================================================ */
+.catalog {
+  display: grid;
+  grid-template-columns: 15rem minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  padding-block: clamp(2rem, 4vw, 3rem) clamp(3rem, 6vw, 5rem);
+}
+@media (max-width: 900px) {
+  .catalog { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+.index {
+  position: sticky; top: 5rem;
+  align-self: start;
+  height: max-content;
+}
+@media (max-width: 900px) {
+  .index { position: static; }
+}
+
+.index-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--fg);
+  margin-bottom: 0.75rem;
+}
+.index-head .label { color: var(--fg); }
+.index-head .count {
+  font-family: var(--mono); font-size: var(--fs-xs);
+  color: var(--dim);
+}
+
+.index-list { list-style: none; }
+.index-item {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.5rem 0.75rem;
+  font-size: var(--fs-sm);
+  color: var(--fg-2);
+  text-align: start;
+  border-inline-end: 2px solid transparent;
+  transition: color 0.15s var(--ease), background-color 0.15s var(--ease),
+              border-color 0.15s var(--ease);
+}
+html[dir="rtl"] .index-item { border-inline-end: 0; border-inline-start: 2px solid transparent; }
+.index-item:hover {
+  color: var(--fg);
+  background: var(--bg-2);
+}
+.index-item[aria-current="true"] {
+  color: var(--accent);
+  background: var(--bg-2);
+}
+html[dir="rtl"] .index-item[aria-current="true"] { border-inline-start-color: var(--accent); }
+html:not([dir="rtl"]) .index-item[aria-current="true"] { border-inline-end-color: var(--accent); }
+.index-item .n {
+  font-family: var(--mono); font-size: var(--fs-xs);
+  color: var(--faint);
+}
+.index-item[aria-current="true"] .n { color: var(--accent); }
+
+.listing-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--fg);
+  margin-bottom: 0.25rem;
+}
+.listing-head h2 {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  letter-spacing: -0.005em;
+}
+.view-toggle {
+  display: inline-flex;
+  border: 1px solid var(--line);
+}
+.view-toggle button {
+  min-height: 32px;
+  padding: 0 0.75rem;
+  font-family: var(--mono); font-size: var(--fs-xs);
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--dim);
+  transition: color 0.15s var(--ease), background-color 0.15s var(--ease);
+}
+.view-toggle button + button { border-inline-start: 1px solid var(--line); }
+.view-toggle button:hover { color: var(--fg); }
+.view-toggle button[aria-pressed="true"] {
+  color: var(--bg);
+  background: var(--fg);
+}
+
+.files {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--line);
+  border-inline-start: 1px solid var(--line);
+}
+.files[data-view="list"] {
+  grid-template-columns: 1fr;
+}
+
+.file {
+  display: flex; flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--line);
+  border-inline-end: 1px solid var(--line);
+  background: var(--bg);
+  transition: background-color 0.15s var(--ease);
+}
+.file:hover { background: var(--bg-2); }
+
+.file-head {
+  display: flex; align-items: flex-start; gap: 0.75rem;
+  min-width: 0;
+}
+.file-icon {
+  flex-shrink: 0;
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  background: var(--bg-3);
+  border: 1px solid var(--line);
+  font-size: 16px; line-height: 1;
+}
+.file-title {
+  font-size: var(--fs-b);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--fg);
+  letter-spacing: -0.005em;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.file-meta {
+  display: flex; flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
+  font-family: var(--mono); font-size: var(--fs-xs);
+  color: var(--dim);
+  letter-spacing: 0.02em;
+}
+.file-meta .sep { color: var(--faint); }
+
+.file-cat {
+  font-family: var(--mono); font-size: var(--fs-xs);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--dim);
+}
+
+.file-foot {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.file-download {
+  display: inline-flex; align-items: center; gap: 0.375rem;
+  min-height: 40px;
+  padding: 0 0.75rem;
+  font-family: var(--mono); font-size: var(--fs-xs); font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--bg);
+  background: var(--fg);
+  text-decoration: none;
+  transition: background-color 0.15s var(--ease), color 0.15s var(--ease);
+}
+.file-download:hover { background: var(--accent); color: var(--bg); }
+.file-download::after { content: '↓'; font-size: 13px; }
+
+.files[data-view="list"] .file {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.875rem 1rem;
+}
+.files[data-view="list"] .file-foot {
+  margin: 0; padding: 0;
+}
+.files[data-view="list"] .file-meta { gap: 0.5rem 1rem; }
+.files[data-view="list"] .file-cat { white-space: nowrap; }
+@media (max-width: 640px) {
+  .files[data-view="list"] .file {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+.empty {
+  grid-column: 1 / -1;
+  padding: 3rem 1rem;
+  text-align: center;
+  font-family: var(--mono); font-size: var(--fs-sm);
+  color: var(--dim);
+  border-bottom: 1px solid var(--line);
+  border-inline-end: 1px solid var(--line);
+}
+
+/* ============================================================
+   COLOPHON
+   ============================================================ */
+.colophon {
+  border-top: 1px solid var(--fg);
+  padding-block: 1.5rem 2rem;
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  gap: 0.5rem 1.5rem;
+  justify-content: space-between;
+  font-family: var(--mono); font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  color: var(--dim);
+}
+.colophon a { color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--line); }
+.colophon a:hover { color: var(--accent); border-color: var(--accent); }
+.colophon .sep { color: var(--faint); padding-inline: 0.4rem; }
+
+/* ============================================================
+   REVEAL
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; transform: translateY(6px); transition: opacity 0.4s var(--ease), transform 0.4s var(--ease); }
+  .reveal[data-shown="true"] { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+</style>
 </head>
 <body>
-  <div class="particles" id="particles"></div>
 
-  <head
-  er>
-    <div class="header-content">
-      <div class="logo">
-        <div class="logo-icon">⚡</div>
-        <span>DOWNWIB</span>
-      </div>
-      
-      <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="جستجوی فایل، نرم‌افزار یا بازی...">
-        <button class="search-btn">جستجو</button>
-      </div>
-      
-      <div class="header-actions">
-        <button class="btn btn-ghost">ساخته شده در تاریخ 2/15/2026🌿</button>
-      </div>
+<a class="skip" href="#files">پرش به فهرست</a>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <a class="brand" href="#top" aria-label="DownWib — خانه">
+      <span class="brand-mark" aria-hidden="true">D</span>
+      <span class="brand-name">DownWib</span>
+    </a>
+
+    <div class="search">
+      <input type="search" id="searchInput" placeholder="جستجو در فایل‌ها، دسته‌ها، نسخه‌ها…" aria-label="جستجو">
+      <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
     </div>
-  </header>
 
-  <main class="container">
-    <section class="hero">
-      <div class="hero-grid">
-        <div class="hero-content">
-          <h1>مرجع دانلود نسل بعد</h1>
-          <p>تجربه‌ای منحصر به فرد با طراحی مدرن، انیمیشن‌های پیشرفته و رابط کاربری فوق‌العاده. دسترسی به بیش از 63 فایل با یک کلیک.</p>
-          
-          <div class="hero-tags">
-            <span class="tag">✨ طراحی Ultra Modern</span>
-            <span class="tag">🚀 عملکرد سریع</span>
-            <span class="tag">🎨 انیمیشن‌های Smooth</span>
-            <span class="tag">📱 ریسپانسیو کامل</span>
-            <span class="tag">ساخته شده توسط ایهان منصور@
-          </div>
-          
-          <div class="hero-cta">
-            <button class="btn btn-primary" onclick="document.querySelector('.files-section').scrollIntoView({behavior:'smooth'})">
-              <span>مشاهده فایل‌ها</span>
-            </button>
-            <button class="btn btn-ghost">درباره پروژه</button>
-          </div>
-        </div>
-        
-        <div class="hero-visual">
-          <div class="feature-card">
-            <div class="feature-icon">📦</div>
-            <h3>+ فایل</h3>
-            <p>دسترسی به کتابخانه‌ای گسترده از نرم‌افزارها و بازی‌ها</p>
-          </div>
-          
-          <div class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <h3>دانلود سریع</h3>
-            <p>سرعت بالا با سرورهای قدرتمند</p>
-          </div>
-          
-          <div class="feature-card">
-            <div class="feature-icon">🔒</div>
-            <h3>امنیت بالا</h3>
-            <p>تمام فایل‌ها اسکن و بررسی شده</p>
-          </div>
-          </div>
-        </div>
+    <p class="masthead-meta">
+      <span class="dot" aria-hidden="true"></span>
+      <span id="metaCount">—</span>
+    </p>
+  </div>
+</header>
+
+<main class="page" id="top">
+
+  <section class="intro">
+    <div class="intro-grid">
+      <div>
+        <p class="kicker">مرجع دانلود — نسخه ۰۱</p>
+        <h1 class="display">
+          فهرستی ساده از نرم‌افزارهایی که <span>واقعاً استفاده می‌کنم.</span>
+        </h1>
+        <p class="lede">
+          بدون صفحه‌های واسط، بدون ریدایرکت، بدون تبلیغ. هر لینک به صفحهٔ
+          رسمی سازنده می‌رود. دسته‌بندی شده، برچسب‌گذاری شده، و مرتب
+          به‌روز می‌شود.
+        </p>
       </div>
+
+      <dl class="stats">
+        <div>
+          <dt>فایل</dt>
+          <dd id="statFiles">—</dd>
+        </div>
+        <div>
+          <dt>دسته</dt>
+          <dd id="statCats">—</dd>
+        </div>
+        <div>
+          <dt>پلتفرم</dt>
+          <dd id="statPlatforms">—</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="catalog">
+
+    <aside class="index" aria-label="دسته‌بندی">
+      <div class="index-head">
+        <span class="label">فهرست</span>
+        <span class="count num" id="indexCount">—</span>
+      </div>
+      <nav aria-label="دسته‌ها">
+        <ul class="index-list" id="indexList"></ul>
+      </nav>
+    </aside>
+
+    <section class="listing" id="files" aria-labelledby="listingTitle">
+      <header class="listing-head">
+        <h2 id="listingTitle">لیست دانلود</h2>
+        <div class="view-toggle" role="group" aria-label="نمایش">
+          <button type="button" id="viewGrid" aria-pressed="true">شبکه</button>
+          <button type="button" id="viewList" aria-pressed="false">فهرست</button>
+        </div>
+      </header>
+
+      <div class="files" id="fileGrid" data-view="grid"></div>
     </section>
 
-    <div class="stats">
-      <div class="stat-card">
-        <div class="stat-value">63+</div>
-  <div class="stat-label">فایل موجود+63</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">12K+</div>
-        <div class="stat-label">دانلود کل</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">231</div>
-        <div class="stat-label">دانلود امروز</div>
-      </div>
-    </div>
+  </div>
 
-    <div class="main-grid">
-      <aside class="sidebar">
-        <div class="category-section">
-          <h3>دسته‌بندی</h3>
-          <ul class="category-list" id="categoryList"></ul>
-        </div>
-        
-        <div class="category-section">
-          <h3>آخرین به‌روزرسانی‌ها</h3>
-          <div id="recentUpdates"></div>
-        </div>
-      </aside>
+  <footer class="colophon">
+    <span>
+      <strong>DownWib</strong>
+      <span class="sep" aria-hidden="true">·</span>
+      <span>ساخته‌شده توسط <a href="https://github.com/AyhanMansur" target="_blank" rel="noopener">آیهان منصور</a></span>
+      <span class="sep" aria-hidden="true">·</span>
+      <span>۱۴۰۳–۱۴۰۵</span>
+    </span>
+    <span>
+      <span class="sep" aria-hidden="true">·</span>
+      <span>یک فایل HTML</span>
+      <span class="sep" aria-hidden="true">·</span>
+      <span>بدون ردیاب</span>
+    </span>
+  </footer>
 
-      <div class="files-section">
-        <div class="section-header">
-          <h2>لیست دانلود</h2>
-          <div class="view-toggle">
-            <button class="view-btn active">شبکه‌ای</button>
-            <button class="view-btn">لیستی</button>
-          </div>
-                  </div>
-        <div class="file-grid" id="fileGrid"></div>
-      </div>
-    </div>
-  </main>
+</main>
 
-  <script>
-    // Data
-    const categories = ["همه", "Windows Apps", "Windows Tools", "Android Apps", "Android Games", "Linux distros", "Browsers", "Multimedia","MacOS iSO","iOS Apps"];
-    const files = [];
-    let idCounter = 1;
+<script>
+(function () {
+  'use strict';
 
-    function addFile(cat, title, size, version, icon, downloadUrl) {
-      files.push({
-        id: idCounter++,
-        category: cat,
-        title,
-        size,
-        version,
-        icon: icon || "📦",
-        downloadUrl: downloadUrl || "#"
+  var CATEGORIES = [
+    'ویندوز — برنامه',
+    'ویندوز — ابزار',
+    'ویندوز — ISO',
+    'مک',
+    'اندروید — برنامه',
+    'اندروید — بازی',
+    'لینوکس',
+    'مرورگر',
+    'چندرسانه‌ای',
+    'iOS'
+  ];
+
+  var FILES = [
+    ['ویندوز — برنامه', 'Adobe Photoshop 2024',      '2.5 GB', '25.0',   '🎨', 'https://www.adobe.com/products/photoshop/free-trial-download.html'],
+    ['ویندوز — برنامه', 'Internet Download Manager', '12 MB',  '6.42',   '⬇️', 'https://www.internetdownloadmanager.com/download.html'],
+    ['ویندوز — برنامه', 'Microsoft Office 2024',     '4.1 GB', '16.0',   '📊', 'https://www.microsoft.com/microsoft-365/try'],
+    ['ویندوز — برنامه', 'Telegram Desktop',          '58 MB',  '5.5',    '✈️', 'https://desktop.telegram.org/'],
+    ['ویندوز — برنامه', 'Discord',                   '92 MB',  '1.0.9',  '💬', 'https://discord.com/download'],
+    ['ویندوز — برنامه', 'Steam',                     '4 MB',   '3.0',    '🎮', 'https://store.steampowered.com/about/'],
+    ['ویندوز — برنامه', 'Zoom',                      '78 MB',  '6.2',    '📞', 'https://zoom.us/download'],
+    ['ویندوز — برنامه', 'Skype',                     '110 MB', '8.131',  '📞', 'https://www.skype.com/en/get-skype/'],
+    ['ویندوز — برنامه', 'Dropbox',                   '145 MB', '196.4',  '☁️', 'https://www.dropbox.com/install'],
+    ['ویندوز — برنامه', 'Google Drive Desktop',      '168 MB', '110.0',  '📁', 'https://www.google.com/drive/download/'],
+    ['ویندوز — برنامه', 'Slack',                     '148 MB', '4.38',   '💼', 'https://slack.com/downloads/'],
+    ['ویندوز — برنامه', 'Trello',                    '90 MB',  '2.14',   '📋', 'https://trello.com/platforms'],
+    ['ویندوز — برنامه', 'Notion',                    '130 MB', '4.3',    '📓', 'https://www.notion.so/desktop'],
+    ['ویندوز — برنامه', 'Adobe Illustrator 2024',    '2.9 GB', '28.0',   '🎨', 'https://www.adobe.com/products/illustrator.html'],
+
+    ['ویندوز — ابزار',  'WinRAR',                    '3 MB',   '6.24',   '📦', 'https://www.win-rar.com/download.html'],
+    ['ویندوز — ابزار',  'Visual Studio Code',        '95 MB',  '1.85',   '💻', 'https://code.visualstudio.com/download'],
+    ['ویندوز — ابزار',  '7-Zip',                     '1.8 MB', '23.01',  '🗜️', 'https://www.7-zip.org/download.html'],
+    ['ویندوز — ابزار',  'Python',                    '28 MB',  '3.12',   '🐍', 'https://www.python.org/downloads/'],
+    ['ویندوز — ابزار',  'Node.js',                   '32 MB',  '20.11',  '🟢', 'https://nodejs.org/en/download/'],
+    ['ویندوز — ابزار',  'Git',                       '52 MB',  '2.43',   '📂', 'https://git-scm.com/downloads'],
+    ['ویندوز — ابزار',  'Notepad++',                 '4.5 MB', '8.6',    '📝', 'https://notepad-plus-plus.org/downloads/'],
+    ['ویندوز — ابزار',  'CCleaner',                  '28 MB',  '6.22',   '🧹', 'https://www.ccleaner.com/ccleaner/download'],
+    ['ویندوز — ابزار',  'VirtualBox',                '105 MB', '7.0',    '📦', 'https://www.virtualbox.org/wiki/Downloads'],
+    ['ویندوز — ابزار',  'TeamViewer',                '90 MB',  '15.50',  '🖥️', 'https://www.teamviewer.com/en/download/'],
+
+    ['ویندوز — ISO',    'Windows 11 Pro',            '5.2 GB', '24H2',   '💿', 'https://www.microsoft.com/software-download/windows11'],
+    ['ویندوز — ISO',    'Windows 10',                '4.8 GB', '22H2',   '💿', 'https://www.microsoft.com/software-download/windows10'],
+
+    ['مک',              'macOS 15 Sequoia',          '14 GB',  '15.2',   '💿', 'https://www.apple.com/macos/sequoia/'],
+    ['مک',              'macOS 14 Sonoma',           '13 GB',  '14.7',   '💿', 'https://www.apple.com/macos/sonoma/'],
+
+    ['اندروید — برنامه', 'WhatsApp',                 '75 MB',  '2.25',   '💬', 'https://www.whatsapp.com/download'],
+    ['اندروید — برنامه', 'Instagram',                '70 MB',  '345.0',  '📷', 'https://play.google.com/store/apps/details?id=com.instagram.android'],
+    ['اندروید — برنامه', 'TikTok',                   '180 MB', '38.4',   '🎵', 'https://play.google.com/store/apps/details?id=com.zhiliaoapp.musically'],
+    ['اندروید — برنامه', 'Photoshop Express',        '95 MB',  '13.4',   '📸', 'https://play.google.com/store/apps/details?id=com.adobe.psmobile'],
+    ['اندروید — برنامه', 'YouTube',                  '160 MB', '19.14',  '📺', 'https://play.google.com/store/apps/details?id=com.google.android.youtube'],
+    ['اندروید — برنامه', 'Netflix',                  '45 MB',  '8.129',  '🎬', 'https://play.google.com/store/apps/details?id=com.netflix.mediaclient'],
+    ['اندروید — برنامه', 'X (Twitter)',              '95 MB',  '11.2',   '🐦', 'https://play.google.com/store/apps/details?id=com.twitter.android'],
+    ['اندروید — برنامه', 'Facebook',                 '95 MB',  '466.1',  '👥', 'https://play.google.com/store/apps/details?id=com.facebook.katana'],
+
+    ['اندروید — بازی',  'PUBG Mobile',               '1.8 GB', '3.2',    '🎮', 'https://www.pubgmobile.com/'],
+    ['اندروید — بازی',  'Minecraft PE',              '880 MB', '1.21',   '⛏️', 'https://play.google.com/store/apps/details?id=com.mojang.minecraftpe'],
+    ['اندروید — بازی',  'Among Us',                  '180 MB', '2024.11','👥', 'https://play.google.com/store/apps/details?id=com.innersloth.spacemafia'],
+    ['اندروید — بازی',  'Call of Duty Mobile',       '2.4 GB', '1.0.48', '🔫', 'https://play.google.com/store/apps/details?id=com.activision.callofduty.shooter'],
+    ['اندروید — بازی',  'Genshin Impact',            '3.5 GB', '5.4',    '⚔️', 'https://genshin.hoyoverse.com/'],
+    ['اندروید — بازی',  'Clash of Clans',            '320 MB', '16.1',   '🏰', 'https://play.google.com/store/apps/details?id=com.supercell.clashofclans'],
+    ['اندروید — بازی',  'Candy Crush Saga',          '90 MB',  '1.285',  '🍬', 'https://play.google.com/store/apps/details?id=com.king.candycrushsaga'],
+
+    ['لینوکس',          'Ubuntu 24.04 LTS',          '4.2 GB', '24.04',  '🐧', 'https://ubuntu.com/download/desktop'],
+    ['لینوکس',          'Fedora Workstation 41',     '2.1 GB', '41',     '🐧', 'https://fedoraproject.org/workstation/download/'],
+    ['لینوکس',          'Linux Mint 22',             '2.5 GB', '22',     '🍃', 'https://linuxmint.com/download.php'],
+    ['لینوکس',          'Debian 13',                 '3.6 GB', '13',     '🌀', 'https://www.debian.org/distrib/'],
+    ['لینوکس',          'Arch Linux',                '1.1 GB', '2026.02','⚙️', 'https://archlinux.org/download/'],
+    ['لینوکس',          'Kali Linux',                '4.0 GB', '2025.4', '🔒', 'https://www.kali.org/get-kali/'],
+
+    ['مرورگر',          'Google Chrome',             '90 MB',  '134.0',  '🌐', 'https://www.google.com/chrome/'],
+    ['مرورگر',          'Mozilla Firefox',           '58 MB',  '135.0',  '🦊', 'https://www.mozilla.org/firefox/download/'],
+    ['مرورگر',          'Opera GX',                  '110 MB', '118.0',  '🌐', 'https://www.opera.com/gx'],
+    ['مرورگر',          'Brave',                     '145 MB', '1.76',   '🦁', 'https://brave.com/download/'],
+    ['مرورگر',          'Microsoft Edge',            '180 MB', '134.0',  '🌊', 'https://www.microsoft.com/edge/download'],
+
+    ['چندرسانه‌ای',     'VLC Media Player',          '45 MB',  '3.0.21', '🎬', 'https://www.videolan.org/vlc/'],
+    ['چندرسانه‌ای',     'Spotify',                   '95 MB',  '1.2.60', '🎵', 'https://www.spotify.com/download/'],
+    ['چندرسانه‌ای',     'OBS Studio',                '150 MB', '31.0',   '📹', 'https://obsproject.com/download'],
+    ['چندرسانه‌ای',     'Blender',                   '320 MB', '4.3',    '🎨', 'https://www.blender.org/download/'],
+    ['چندرسانه‌ای',     'GIMP',                      '280 MB', '2.10.38','🖼️', 'https://www.gimp.org/downloads/'],
+    ['چندرسانه‌ای',     'Audacity',                  '45 MB',  '3.7',    '🎙️', 'https://www.audacityteam.org/download/'],
+    ['چندرسانه‌ای',     'iTunes',                    '230 MB', '12.13',  '🎵', 'https://www.apple.com/itunes/download/'],
+    ['چندرسانه‌ای',     'Adobe Premiere Pro 2024',   '3.8 GB', '25.0',   '🎬', 'https://www.adobe.com/products/premiere.html'],
+
+    ['iOS',             'WhatsApp',                  '170 MB', '25.1',   '💬', 'https://apps.apple.com/app/whatsapp-messenger/id310633997'],
+    ['iOS',             'Instagram',                 '260 MB', '345.0',  '📷', 'https://apps.apple.com/app/instagram/id389801252'],
+    ['iOS',             'Telegram',                  '210 MB', '11.4',   '✈️', 'https://apps.apple.com/app/telegram-messenger/id686449807']
+  ];
+
+  var FILES_OBJ = FILES.map(function (row, i) {
+    return {
+      id: i + 1,
+      category: row[0],
+      title: row[1],
+      size: row[2],
+      version: row[3],
+      icon: row[4],
+      url: row[5]
+    };
+  });
+
+  var currentCategory = 'همه';
+  var currentQuery = '';
+  var currentView = 'grid';
+
+  function fa(n) {
+    return String(n).replace(/\d/g, function (d) {
+      return '۰۱۲۳۴۵۶۷۸۹'[d];
+    });
+  }
+
+  var grid        = document.getElementById('fileGrid');
+  var indexList   = document.getElementById('indexList');
+  var indexCount  = document.getElementById('indexCount');
+  var searchInput = document.getElementById('searchInput');
+  var metaCount   = document.getElementById('metaCount');
+  var statFiles   = document.getElementById('statFiles');
+  var statCats    = document.getElementById('statCats');
+  var statPlatforms = document.getElementById('statPlatforms');
+  var listingTitle = document.getElementById('listingTitle');
+  var viewGrid    = document.getElementById('viewGrid');
+  var viewList    = document.getElementById('viewList');
+
+  function renderStats() {
+    var platforms = {};
+    FILES_OBJ.forEach(function (f) {
+      var p = f.category.split('—')[0].trim();
+      platforms[p] = true;
+    });
+    if (statFiles) statFiles.textContent = fa(FILES_OBJ.length);
+    if (statCats) statCats.textContent = fa(CATEGORIES.length);
+    if (statPlatforms) statPlatforms.textContent = fa(Object.keys(platforms).length);
+    if (metaCount) metaCount.textContent = fa(FILES_OBJ.length) + ' فایل';
+  }
+
+  function renderIndex() {
+    var total = FILES_OBJ.length;
+    var list = ['همه'].concat(CATEGORIES);
+
+    indexList.innerHTML = '';
+    list.forEach(function (cat) {
+      var count = cat === 'همه'
+        ? total
+        : FILES_OBJ.filter(function (f) { return f.category === cat; }).length;
+
+      var li = document.createElement('li');
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'index-item';
+      btn.setAttribute('aria-current', String(cat === currentCategory));
+      btn.innerHTML = '<span>' + cat + '</span><span class="n num">' + fa(count) + '</span>';
+      btn.addEventListener('click', function () {
+        currentCategory = cat;
+        renderIndex();
+        renderFiles();
       });
-    }
-
-    // Sample data with example download links
-    addFile("Windows Apps", "Adobe Photoshop 2024", "2.5GB", "25.0", "🎨", "https://www.adobe.com/products/photoshop/free-trial-download.html");
-    addFile("Windows Apps", "Internet Download Manager", "12MB", "6.42", "⬇️", "https://www.internetdownloadmanager.com/download.html");
-    addFile("Windows Tools", "WinRAR Final", "3MB", "6.24", "📦", "https://www.win-rar.com/download.html");
-    addFile("Browsers", "Google Chrome", "90MB", "2025", "🌐", "https://www.google.com/chrome/");
-    addFile("Multimedia", "VLC Media Player", "45MB", "3.0.20", "🎬", "https://www.videolan.org/vlc/");
-    addFile("Android Apps", "WhatsApp", "75MB", "2.25", "💬", "https://www.whatsapp.com/download");
-    addFile("Android Games", "PUBG Mobile", "1.8GB", "3.2", "🎮", "https://www.pubgmobile.com/");
-    addFile("Linux distros", "Ubuntu 24.04", "4.2GB", "24.04", "🐧", "https://ubuntu.com/download/desktop");
-    addFile("Windows ISO", "Windows 11 Pro ISO", "5.2GB", "25H2", "💿", "https://www.microsoft.com/software-download/windows11");
-    addFile("Windows ISO", "Windows 10 ISO", "4.8GB", "22H2", "💿", "https://www.microsoft.com/software-download/windows10");
-    addFile("", "MacOS iSO", "18.0GB", "MacOS 26 Tahoo", "💿", "https://soft98.ir/os/mac-os-x/16666-mac-win-vmware.html");
-
-    // Generate more files
-    const moreFiles = [
-      { name: "Microsoft Office 2024", cat: "Windows Apps", url: "https://www.microsoft.com/microsoft-365/try", icon: "📊" },
-      { name: "Visual Studio Code", cat: "Windows Tools", url: "https://code.visualstudio.com/download", icon: "💻" },
-      { name: "7-Zip", cat: "Windows Tools", url: "https://www.7-zip.org/download.html", icon: "🗜️" },
-      { name: "Firefox Browser", cat: "Browsers", url: "https://www.mozilla.org/firefox/download/", icon: "🦊" },
-      { name: "MacOS 26 Tahoo", cat: "MacOS iSO", url: "https://soft98.ir/os/mac-os-x/16666-mac-win-vmware.html", icon: "💿" },
-      { name: "Opera GX", cat: "Browsers", url: "https://www.opera.com/gx", icon: "🌐" },
-      { name: "Spotify", cat: "Multimedia", url: "https://www.spotify.com/download/", icon: "🎵" },
-      { name: "OBS Studio", cat: "Multimedia", url: "https://dl2.soft98.ir/soft/o/OBS.Studio.27.2.4.x64.rar?1768769583", icon: "📹" },
-      { name: "Telegram Desktop", cat: "Windows Apps", url: "https://desktop.telegram.org/", icon: "✈️" },
-      { name: "Discord", cat: "Windows Apps", url: "https://discord.com/download", icon: "💬" },
-      { name: "Steam", cat: "Windows Apps", url: "https://store.steampowered.com/about/", icon: "🎮" },
-      { name: "Zoom", cat: "Windows Apps", url: "https://zoom.us/download", icon: "📞" },
-      { name: "Blender", cat: "Multimedia", url: "https://www.blender.org/download/", icon: "🎨" },
-      { name: "MacOS 15.7 Sequia", cat: "MacOS iSO", url: "https://edge11.83.ir.cdn.ir/os/macOS.Sequoia.15.0.Virtual.Machines.html", icon: "💿" },
-      { name: "GIMP", cat: "Multimedia", url: "https://www.gimp.org/downloads/", icon: "🖼️" },
-      { name: "Audacity", cat: "Multimedia", url: "https://www.audacityteam.org/download/", icon: "🎙️" },
-      { name: "Python", cat: "Windows Tools", url: "https://www.python.org/downloads/", icon: "🐍" },
-      { name: "Node.js", cat: "Windows Tools", url: "https://nodejs.org/en/download/", icon: "🟢" },
-      { name: "Git", cat: "Windows Tools", url: "https://git-scm.com/downloads", icon: "📂" },
-      { name: "Notepad++", cat: "Windows Tools", url: "https://notepad-plus-plus.org/downloads/", icon: "📝" },
-      { name: "Instagram", cat: "Android Apps", url: "https://play.google.com/store/apps/details?id=com.instagram.android", icon: "📷" },
-      { name: "TikTok", cat: "Android Apps", url: "https://play.google.com/store/apps/details?id=com.zhiliaoapp.musically", icon: "🎵" },
-      { name: "Minecraft PE", cat: "Android Games", url: "https://play.google.com/store/apps/details?id=com.mojang.minecraftpe", icon: "⛏️" },
-      { name: "Among Us", cat: "Android Games", url: "https://play.google.com/store/apps/details?id=com.innersloth.spacemafia", icon: "👥" },
-      { name: "Fedora Workstation", cat: "Linux distros", url: "https://fedoraproject.org/workstation/download/", icon: "🐧" },
-      { name: "Linux Mint", cat: "Linux distros", url: "https://linuxmint.com/download.php", icon: "🍃" },
-      { name: "Debian", cat: "Linux distros", url: "https://www.debian.org/distrib/", icon: "🌀" },
-      { name: "Adobe Illustrator", cat: "Windows Apps", url: "https://www.adobe.com/products/illustrator.html", icon: "🎨" },
-      { name: "Adobe Premiere Pro", cat: "Multimedia", url: "https://www.adobe.com/products/premiere.html", icon: "🎬" },
-      { name: "Photoshop Express", cat: "Android Apps", url: "https://play.google.com/store/apps/details?id=com.adobe.psmobile", icon: "📸" },
-      { name: "CCleaner", cat: "Windows Tools", url: "https://www.ccleaner.com/ccleaner/download", icon: "🧹" },
-      { name: "VirtualBox", cat: "Windows Tools", url: "https://www.virtualbox.org/wiki/Downloads", icon: "📦" },
-      { name: "Brave Browser", cat: "Browsers", url: "https://brave.com/download/", icon: "🦁" },
-      { name: "Microsoft Edge", cat: "Browsers", url: "https://www.microsoft.com/edge/download", icon: "🌊" },
-      { name: "iTunes", cat: "Multimedia", url: "https://www.apple.com/itunes/download/", icon: "🎵" },
-      { name: "Skype", cat: "Windows Apps", url: "https://www.skype.com/en/get-skype/", icon: "📞" },
-      { name: "TeamViewer", cat: "Windows Tools", url: "https://www.teamviewer.com/en/download/", icon: "🖥️" },
-      { name: "Dropbox", cat: "Windows Apps", url: "https://www.dropbox.com/install", icon: "☁️" },
-      { name: "Google Drive Desktop", cat: "Windows Apps", url: "https://www.google.com/drive/download/", icon: "📁" },
-      { name: "Slack", cat: "Windows Apps", url: "https://slack.com/downloads/", icon: "💼" },
-      { name: "Trello", cat: "Windows Apps", url: "https://trello.com/platforms", icon: "📋" },
-      { name: "Notion", cat: "Windows Apps", url: "https://www.notion.so/desktop", icon: "📓" },
-      { name: "Call of Duty Mobile", cat: "Android Games", url: "https://play.google.com/store/apps/details?id=com.activision.callofduty.shooter", icon: "🔫" },
-      { name: "Genshin Impact", cat: "Android Games", url: "https://genshin.hoyoverse.com/", icon: "⚔️" },
-      { name: "Clash of Clans", cat: "Android Games", url: "https://play.google.com/store/apps/details?id=com.supercell.clashofclans", icon: "🏰" },
-      { name: "Candy Crush", cat: "Android Games", url: "https://play.google.com/store/apps/details?id=com.king.candycrushsaga", icon: "🍬" },
-      { name: "YouTube", cat: "Android Apps", url: "https://play.google.com/store/apps/details?id=com.google.android.youtube", icon: "📺" },
-      { name: "Netflix", cat: "Android Apps", url: "https://play.google.com/store/apps/details?id=com.netflix.mediaclient", icon: "🎬" },
-      { name: "Twitter (X)", cat: "Android Apps", url: "https://play.google.com/store/apps/details?id=com.twitter.android", icon: "🐦" },
-      { name: "Facebook", cat: "Android Apps", url: "https://play.google.com/store/apps/details?id=com.facebook.katana", icon: "👥" },
-      { name: "Arch Linux", cat: "Linux distros", url: "https://archlinux.org/download/", icon: "⚙️" },
-      { name: "Kali Linux", cat: "Linux distros", url: "https://www.kali.org/get-kali/", icon: "🔒" }
-    ];
-    
-    moreFiles.forEach((item, i) => {
-      const size = `${50 + (i * 15)}MB`;
-      const version = `v${(i % 10) + 1}.${(i % 20)}`;
-      addFile(item.cat, item.name, size, version, item.icon, item.url);
+      li.appendChild(btn);
+      indexList.appendChild(li);
     });
 
-    let currentCategory = "همه";
+    if (indexCount) {
+      var shown = currentCategory === 'همه'
+        ? total
+        : FILES_OBJ.filter(function (f) { return f.category === currentCategory; }).length;
+      indexCount.textContent = fa(shown) + ' / ' + fa(total);
+    }
+  }
 
-    // Generate particles
-    function createParticles() {
-      const container = document.getElementById('particles');
-      for (let i = 0; i < 30; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 20 + 's';
-        particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-        container.appendChild(particle);
+  function renderFiles() {
+    var q = currentQuery.trim().toLowerCase();
+
+    var rows = FILES_OBJ.filter(function (f) {
+      if (currentCategory !== 'همه' && f.category !== currentCategory) return false;
+      if (!q) return true;
+      return f.title.toLowerCase().indexOf(q) > -1 ||
+             f.category.toLowerCase().indexOf(q) > -1 ||
+             f.version.toLowerCase().indexOf(q) > -1;
+    });
+
+    grid.setAttribute('data-view', currentView);
+    grid.innerHTML = '';
+
+    if (!rows.length) {
+      var empty = document.createElement('div');
+      empty.className = 'empty';
+      empty.textContent = 'چیزی پیدا نشد.';
+      grid.appendChild(empty);
+      if (listingTitle) {
+        listingTitle.textContent = currentCategory === 'همه' ? 'لیست دانلود' : currentCategory;
       }
+      return;
     }
 
-    // Render categories
-    function renderCategories() {
-      const list = document.getElementById('categoryList');
-      list.innerHTML = '';
-      categories.forEach(cat => {
-        const count = cat === "همه" ? files.length : files.filter(f => f.category === cat).length;
-        const li = document.createElement('li');
-        li.className = 'category-item' + (cat === currentCategory ? ' active' : '');
-        li.innerHTML = `
-          <span>${cat}</span>
-          <span class="category-count">${count}</span>
-        `;
-        li.onclick = () => {
-          currentCategory = cat;
-          renderCategories();
-          renderFiles();
-        };
-        list.appendChild(li);
-      });
-    }
+    rows.forEach(function (f) {
+      var card = document.createElement('article');
+      card.className = 'file';
+      card.innerHTML =
+        '<div class="file-head">' +
+          '<span class="file-icon" aria-hidden="true">' + f.icon + '</span>' +
+          '<h3 class="file-title">' + escapeHtml(f.title) + '</h3>' +
+        '</div>' +
+        '<p class="file-meta">' +
+          '<span class="num">' + escapeHtml(f.size) + '</span>' +
+          '<span class="sep" aria-hidden="true">·</span>' +
+          '<span class="num">v' + escapeHtml(f.version) + '</span>' +
+        '</p>' +
+        '<div class="file-foot">' +
+          '<span class="file-cat">' + escapeHtml(f.category) + '</span>' +
+          '<a class="file-download" href="' + escapeHtml(f.url) + '" target="_blank" rel="noopener" ' +
+             'title="صفحهٔ رسمی سازنده">دریافت</a>' +
+        '</div>';
+      grid.appendChild(card);
+    });
 
-    // Render files
-    function renderFiles() {
-      const grid = document.getElementById('fileGrid');
-      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-      let filtered = currentCategory === "همه" 
-        ? files 
-        : files.filter(f => f.category === currentCategory);
-      
-      if (searchTerm) {
-        filtered = filtered.filter(f => 
-          f.title.toLowerCase().includes(searchTerm) || 
-          f.category.toLowerCase().includes(searchTerm)
-        );
-      }
-      
-      grid.innerHTML = '';
-      filtered.forEach((file, i) => {
-        const card = document.createElement('div');
-        card.className = 'file-card loading';
-        card.style.animationDelay = (i * 0.05) + 's';
-        card.innerHTML = `
-          <div class="file-icon-wrapper">${file.icon}</div>
-          <div class="file-title">${file.title}</div>
-          <div class="file-meta">
-            <span>📊 ${file.size}</span>
-            <span>🔖 ${file.version}</span>
-          </div>
-          <div class="file-actions">
-            <button class="btn-download" onclick="window.open('${file.downloadUrl}', '_blank')">دانلود</button>
-            <button class="btn-info" onclick="alert('${file.title}\\n\\nحجم: ${file.size}\\nنسخه: ${file.version}\\nدسته: ${file.category}\\n\\nلینک: ${file.downloadUrl}')">ℹ️</button>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-      
-      if (filtered.length === 0) {
-        grid.innerHTML = '<div style="text-align:center;padding:40px;color:rgba(210,180,140,0.6);">هیچ فایلی یافت نشد</div>';
-      }
+    if (listingTitle) {
+      listingTitle.textContent = currentCategory === 'همه' ? 'لیست دانلود' : currentCategory;
     }
+  }
 
-    // Recent updates
-    function renderUpdates() {
-      const container = document.getElementById('recentUpdates');
-      const recent = files.slice(-5).reverse();
-      container.innerHTML = recent.map(f => `
-        <div style="padding: 8px 0; border-bottom: 1px solid rgba(210,180,140,0.1); font-size: 13px; color: rgba(210,180,140,0.7);">
-          ${f.icon} ${f.title}
-        </div>
-      `).join('');
-    }
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
 
-    // Search functionality
-    document.getElementById('searchInput').addEventListener('input', () => {
+  if (searchInput) {
+    searchInput.addEventListener('input', function () {
+      currentQuery = searchInput.value;
       renderFiles();
     });
+  }
 
-    // Initialize
-    createParticles();
-    renderCategories();
-    renderFiles();
-    renderUpdates();
-  </script>
+  if (viewGrid && viewList) {
+    viewGrid.addEventListener('click', function () {
+      currentView = 'grid';
+      viewGrid.setAttribute('aria-pressed', 'true');
+      viewList.setAttribute('aria-pressed', 'false');
+      renderFiles();
+    });
+    viewList.addEventListener('click', function () {
+      currentView = 'list';
+      viewGrid.setAttribute('aria-pressed', 'false');
+      viewList.setAttribute('aria-pressed', 'true');
+      renderFiles();
+    });
+  }
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === '/' && document.activeElement !== searchInput) {
+      var tag = (document.activeElement && document.activeElement.tagName) || '';
+      if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
+        e.preventDefault();
+        if (searchInput) searchInput.focus();
+      }
+    }
+  });
+
+  renderStats();
+  renderIndex();
+  renderFiles();
+
+})();
+</script>
 </body>
 </html>
-<html>
-</html
