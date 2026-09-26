@@ -1,6 +1,572 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
+  <meta charset="UTF-8">
+  <title>DownWib 🌿</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0c2224;
+      color: #f5e6d3;
+      direction: rtl;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated gradient background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: 
+        radial-gradient(circle at 20% 20%, rgba(210, 180, 140, 0.08), transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(205, 170, 125, 0.08), transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(222, 184, 135, 0.06), transparent 60%);
+      animation: bgShift 15s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    @keyframes bgShift {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.1) rotate(5deg); }
+    }
+    
+    /* Floating particles */
+    .particles {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(222, 211, 195, 0.686);
+      border-radius: 50%;
+      animation: float 20s infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(26, 40, 94, 0.121);
+      border-bottom: 1px solid rgba(210, 180, 140, 0.2);
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 24px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #8cd2b7, #7ac2cd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #88c5cf, #72a6c9);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .logo-icon::before {
+      content: '';
+      position: absolute;
+      inset: -50%;
+      background: conic-gradient(from 0deg, transparent, rgba(245, 230, 211, 0.3), transparent);
+      animation: rotate 3s linear infinite;
+    }
+
+    @keyframes rotate {
+      to { transform: rotate(360deg); }
+    }
+
+    .search-bar {
+      flex: 1;
+      max-width: 500px;
+      margin: 0 32px;
+      position: relative;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 14px 48px 14px 20px;
+      border-radius: 16px;
+      border: 2px solid rgba(210, 180, 140, 0.2);
+      background: rgba(210, 180, 140, 0.05);
+      color: #f5e6d3;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .search-bar input:focus {
+      outline: none;
+      border-color: #d2b48c;
+      background: rgba(210, 180, 140, 0.1);
+      box-shadow: 0 0 30px rgba(210, 180, 140, 0.2);
+    }
+
+    .search-btn {
+      position: absolute;
+      left: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: linear-gradient(135deg, #d2b48c, #c19a6b);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 10px;
+      color: #1a1612;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .search-btn:hover {
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 12px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+
+    .btn-ghost {
+      background: rgba(210, 180, 140, 0.08);
+      color: #f5e6d3;
+      border: 1px solid rgba(210, 180, 140, 0.2);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(210, 180, 140, 0.15);
+      transform: translateY(-2px);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 80px 0;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(40px, 5vw, 72px);
+      line-height: 1.1;
+      margin-bottom: 24px;
+      background: linear-gradient(135deg, #f5e6d3, #d2b48c, #c19a6b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-content p {
+      font-size: 18px;
+      color: rgba(210, 180, 140, 0.8);
+      margin-bottom: 32px;
+      line-height: 1.6;
+      animation: fadeInUp 0.8s ease-out 0.2s backwards;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 40px;
+      animation: fadeInUp 0.8s ease-out 0.4s backwards;
+    }
+
+    .tag {
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: rgba(210, 180, 140, 0.08);
+      border: 1px solid rgba(210, 180, 140, 0.2);
+      font-size: 13px;
+      color: rgba(210, 180, 140, 0.9);
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      animation: fadeInUp 0.8s ease-out 0.6s backwards;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #d2b48c, #c19a6b);
+      color: #1a1612;
+      padding: 16px 32px;
+      font-size: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #c19a6b, #d2b48c);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-primary:hover::before {
+      opacity: 1;
+    }
+
+    .btn-primary span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(210, 180, 140, 0.3);
+    }
+
+    /* Hero Visual */
+    .hero-visual {
+      position: relative;
+      height: 500px;
+      animation: fadeInUp 0.8s ease-out 0.4s backwards;
+    }
+
+    .feature-card {
+      position: absolute;
+      background: rgba(210, 180, 140, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(210, 180, 140, 0.2);
+      border-radius: 20px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      background: rgba(210, 180, 140, 0.1);
+      border-color: rgba(210, 180, 140, 0.4);
+      box-shadow: 0 20px 60px rgba(210, 180, 140, 0.2);
+    }
+
+    .feature-card:nth-child(1) {
+      top: 0;
+      right: 0;
+      width: 280px;
+      animation: float-card 6s ease-in-out infinite;
+    }
+
+    .feature-card:nth-child(2) {
+      top: 180px;
+      left: 0;
+      width: 260px;
+      animation: float-card 6s ease-in-out infinite 2s;
+    }
+
+    .feature-card:nth-child(3) {
+      bottom: 0;
+      right: 60px;
+      width: 240px;
+      animation: float-card 6s ease-in-out infinite 4s;
+    }
+
+    @keyframes float-card {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #d2b48c, #c19a6b);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .feature-card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: #f5e6d3;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: rgba(210, 180, 140, 0.7);
+    }
+
+    /* Stats */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin: 80px 0;
+    }
+
+    .stat-card {
+      background: rgba(210, 180, 140, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(210, 180, 140, 0.2);
+      border-radius: 20px;
+      padding: 32px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-4px);
+      background: rgba(210, 180, 140, 0.08);
+      border-color: rgba(210, 180, 140, 0.3);
+    }
+
+    .stat-value {
+      font-size: 48px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #d2b48c, #c19a6b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 16px;
+      color: rgba(210, 180, 140, 0.7);
+    }
+
+    /* Main Content */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 32px;
+      margin-bottom: 80px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+    }
+
+    .category-section {
+      background: rgba(210, 180, 140, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(210, 180, 140, 0.2);
+      border-radius: 20px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .category-section h3 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(210, 180, 140, 0.6);
+      margin-bottom: 16px;
+    }
+
+    .category-list {
+      list-style: none;
+    }
+
+    .category-item {
+      padding: 12px 16px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: rgba(210, 180, 140, 0.8);
+      font-size: 14px;
+    }
+
+    .category-item:hover {
+      background: rgba(210, 180, 140, 0.08);
+      color: #f5e6d3;
+    }
+
+    .category-item.active {
+      background: linear-gradient(135deg, rgba(210, 180, 140, 0.2), rgba(193, 154, 107, 0.2));
+      color: #f5e6d3;
+      border: 1px solid rgba(210, 180, 140, 0.3);
+    }
+
+    .category-count {
+      background: rgba(210, 180, 140, 0.15);
+      padding: 4px 8px;
+      border-radius: 8px;
+      font-size: 12px;
+    }
+
+    /* File Grid */
+    .files-section {
+      background: rgba(210, 180, 140, 0.03);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(210, 180, 140, 0.2);
+      border-radius: 20px;
+      padding: 32px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    .section-header h2 {
+      font-size: 28px;
+      color: #f5e6d3;
+    }
+
+    .view-toggle {
+      display: flex;
+      gap: 8px;
+      background: rgba(210, 180, 140, 0.08);
+      padding: 4px;
+      border-radius: 12px;
+    }
+
+    .view-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: transparent;
+      border: none;
+      color: rgba(210, 180, 140, 0.6);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .view-btn.active {
+      background: rgba(210, 180, 140, 0.2);
+      color: #f5e6d3;
+    }
+
+    .file-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .file-card {
+      background: rgba(210, 180, 140, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(210, 180, 140, 0.2);
+      border-radius: 16px;
+      padding: 20px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .file-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #d2b48c, #c19a6b);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .file-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .file-card:hover {
+      transform: translateY(-4px);
+      background: rgba(210, 180, 140, 0.08);
+      border-color: rgba(210, 180, 140, 0.4);
+      box-shadow: 0 20px 40px rgba(26, 22, 18, 0.4);
+    }
+
+    .file-icon-wrapper {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, rgba(210, 180, 140, 0.2), rgba(193, 154, 107, 0.2));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(210, 180, 140, 0.2);
+    }
+
+    .file-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #f5e6d3;
+    }
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DownWib — مرجع نرم‌افزار</title>
@@ -556,8 +1122,19 @@ html:not([dir="rtl"]) .index-item[aria-current="true"] { border-inline-end-color
 </head>
 <body>
 
+    .file-meta {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: rgba(210, 180, 140, 0.6);
+    }
 <a class="skip" href="#files">پرش به فهرست</a>
 
+    .file-actions {
+      display: flex;
+      gap: 8px;
+    }
 <header class="masthead">
   <div class="masthead-inner">
     <a class="brand" href="#top" aria-label="DownWib — خانه">
@@ -565,11 +1142,26 @@ html:not([dir="rtl"]) .index-item[aria-current="true"] { border-inline-end-color
       <span class="brand-name">DownWib</span>
     </a>
 
+    .btn-download {
+      flex: 1;
+      padding: 10px;
+      background: linear-gradient(135deg, #d2b48c, #c19a6b);
+      border: none;
+      border-radius: 10px;
+      color: #1a1612;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
     <div class="search">
       <input type="search" id="searchInput" placeholder="جستجو در فایل‌ها، دسته‌ها، نسخه‌ها…" aria-label="جستجو">
       <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
     </div>
 
+    .btn-download:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 20px rgba(210, 180, 140, 0.3);
+    }
     <p class="masthead-meta">
       <span class="dot" aria-hidden="true"></span>
       <span id="metaCount">—</span>
@@ -593,6 +1185,16 @@ html:not([dir="rtl"]) .index-item[aria-current="true"] { border-inline-end-color
         </p>
       </div>
 
+    .btn-info {
+      width: 40px;
+      background: rgba(210, 180, 140, 0.08);
+      border: 1px solid rgba(210, 180, 140, 0.2);
+      border-radius: 10px;
+      color: #f5e6d3;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    
       <dl class="stats">
         <div>
           <dt>فایل</dt>
@@ -610,8 +1212,17 @@ html:not([dir="rtl"]) .index-item[aria-current="true"] { border-inline-end-color
     </div>
   </section>
 
+    .btn-info:hover {
+      background: rgba(210, 180, 140, 0.15);
+    }
   <div class="catalog">
 
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
     <aside class="index" aria-label="دسته‌بندی">
       <div class="index-head">
         <span class="label">فهرست</span>
@@ -631,9 +1242,15 @@ html:not([dir="rtl"]) .index-item[aria-current="true"] { border-inline-end-color
         </div>
       </header>
 
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
       <div class="files" id="fileGrid" data-view="grid"></div>
     </section>
 
+      .sidebar {
+        position: static;
+      }
   </div>
 
   <footer class="colophon">
@@ -819,6 +1436,9 @@ html:not([dir="rtl"]) .index-item[aria-current="true"] { border-inline-end-color
       indexList.appendChild(li);
     });
 
+      .stats {
+        grid-template-columns: 1fr;
+      }
     if (indexCount) {
       var shown = currentCategory === 'همه'
         ? total
@@ -827,9 +1447,17 @@ html:not([dir="rtl"]) .index-item[aria-current="true"] { border-inline-end-color
     }
   }
 
+    @media (max-width: 768px) {
+      .search-bar {
+        margin: 16px 0;
+      }
   function renderFiles() {
     var q = currentQuery.trim().toLowerCase();
 
+      .header-content {
+        flex-direction: column;
+        align-items: stretch;
+      }
     var rows = FILES_OBJ.filter(function (f) {
       if (currentCategory !== 'همه' && f.category !== currentCategory) return false;
       if (!q) return true;
@@ -838,9 +1466,14 @@ html:not([dir="rtl"]) .index-item[aria-current="true"] { border-inline-end-color
              f.version.toLowerCase().indexOf(q) > -1;
     });
 
+      .file-grid {
+        grid-template-columns: 1fr;
+      }
     grid.setAttribute('data-view', currentView);
     grid.innerHTML = '';
 
+      .hero-content h1 {
+        font-size: 36px;
     if (!rows.length) {
       var empty = document.createElement('div');
       empty.className = 'empty';
@@ -849,6 +1482,101 @@ html:not([dir="rtl"]) .index-item[aria-current="true"] { border-inline-end-color
       if (listingTitle) {
         listingTitle.textContent = currentCategory === 'همه' ? 'لیست دانلود' : currentCategory;
       }
+    }
+
+    /* Loading animation */
+    .loading {
+      opacity: 0;
+      animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="particles" id="particles"></div>
+
+  <head
+  er>
+    <div class="header-content">
+      <div class="logo">
+        <div class="logo-icon">⚡</div>
+        <span>DOWNWIB</span>
+      </div>
+      
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="جستجوی فایل، نرم‌افزار یا بازی...">
+        <button class="search-btn">جستجو</button>
+      </div>
+      
+      <div class="header-actions">
+        <button class="btn btn-ghost">ساخته شده در تاریخ 2/15/2026🌿</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-grid">
+        <div class="hero-content">
+          <h1>مرجع دانلود نسل بعد</h1>
+          <p>تجربه‌ای منحصر به فرد با طراحی مدرن، انیمیشن‌های پیشرفته و رابط کاربری فوق‌العاده. دسترسی به بیش از 63 فایل با یک کلیک.</p>
+          
+          <div class="hero-tags">
+            <span class="tag">✨ طراحی Ultra Modern</span>
+            <span class="tag">🚀 عملکرد سریع</span>
+            <span class="tag">🎨 انیمیشن‌های Smooth</span>
+            <span class="tag">📱 ریسپانسیو کامل</span>
+            <span class="tag">ساخته شده توسط ایهان منصور@
+          </div>
+          
+          <div class="hero-cta">
+            <button class="btn btn-primary" onclick="document.querySelector('.files-section').scrollIntoView({behavior:'smooth'})">
+              <span>مشاهده فایل‌ها</span>
+            </button>
+            <button class="btn btn-ghost">درباره پروژه</button>
+          </div>
+        </div>
+        
+        <div class="hero-visual">
+          <div class="feature-card">
+            <div class="feature-icon">📦</div>
+            <h3>+ فایل</h3>
+            <p>دسترسی به کتابخانه‌ای گسترده از نرم‌افزارها و بازی‌ها</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>دانلود سریع</h3>
+            <p>سرعت بالا با سرورهای قدرتمند</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>امنیت بالا</h3>
+            <p>تمام فایل‌ها اسکن و بررسی شده</p>
+          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-value">63+</div>
+  <div class="stat-label">فایل موجود+63</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">12K+</div>
+        <div class="stat-label">دانلود کل</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">231</div>
+        <div class="stat-label">دانلود امروز</div>
+      </div>
+    </div>
       return;
     }
 
@@ -873,17 +1601,167 @@ html:not([dir="rtl"]) .index-item[aria-current="true"] { border-inline-end-color
       grid.appendChild(card);
     });
 
+    <div class="main-grid">
+      <aside class="sidebar">
+        <div class="category-section">
+          <h3>دسته‌بندی</h3>
+          <ul class="category-list" id="categoryList"></ul>
+        </div>
+        
+        <div class="category-section">
+          <h3>آخرین به‌روزرسانی‌ها</h3>
+          <div id="recentUpdates"></div>
+        </div>
+      </aside>
+
+      <div class="files-section">
+        <div class="section-header">
+          <h2>لیست دانلود</h2>
+          <div class="view-toggle">
+            <button class="view-btn active">شبکه‌ای</button>
+            <button class="view-btn">لیستی</button>
+          </div>
+                  </div>
+        <div class="file-grid" id="fileGrid"></div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Data
+    const categories = ["همه", "Windows Apps", "Windows Tools", "Android Apps", "Android Games", "Linux distros", "Browsers", "Multimedia","MacOS iSO","iOS Apps"];
+    const files = [];
+    let idCounter = 1;
+
+    function addFile(cat, title, size, version, icon, downloadUrl) {
+      files.push({
+        id: idCounter++,
+        category: cat,
+        title,
+        size,
+        version,
+        icon: icon || "📦",
+        downloadUrl: downloadUrl || "#"
+      });
     if (listingTitle) {
       listingTitle.textContent = currentCategory === 'همه' ? 'لیست دانلود' : currentCategory;
     }
   }
 
+    // Sample data with example download links
+    addFile("Windows Apps", "Adobe Photoshop 2024", "2.5GB", "25.0", "🎨", "https://www.adobe.com/products/photoshop/free-trial-download.html");
+    addFile("Windows Apps", "Internet Download Manager", "12MB", "6.42", "⬇️", "https://www.internetdownloadmanager.com/download.html");
+    addFile("Windows Tools", "WinRAR Final", "3MB", "6.24", "📦", "https://www.win-rar.com/download.html");
+    addFile("Browsers", "Google Chrome", "90MB", "2025", "🌐", "https://www.google.com/chrome/");
+    addFile("Multimedia", "VLC Media Player", "45MB", "3.0.20", "🎬", "https://www.videolan.org/vlc/");
+    addFile("Android Apps", "WhatsApp", "75MB", "2.25", "💬", "https://www.whatsapp.com/download");
+    addFile("Android Games", "PUBG Mobile", "1.8GB", "3.2", "🎮", "https://www.pubgmobile.com/");
+    addFile("Linux distros", "Ubuntu 24.04", "4.2GB", "24.04", "🐧", "https://ubuntu.com/download/desktop");
+    addFile("Windows ISO", "Windows 11 Pro ISO", "5.2GB", "25H2", "💿", "https://www.microsoft.com/software-download/windows11");
+    addFile("Windows ISO", "Windows 10 ISO", "4.8GB", "22H2", "💿", "https://www.microsoft.com/software-download/windows10");
+    addFile("", "MacOS iSO", "18.0GB", "MacOS 26 Tahoo", "💿", "https://soft98.ir/os/mac-os-x/16666-mac-win-vmware.html");
+
+    // Generate more files
+    const moreFiles = [
+      { name: "Microsoft Office 2024", cat: "Windows Apps", url: "https://www.microsoft.com/microsoft-365/try", icon: "📊" },
+      { name: "Visual Studio Code", cat: "Windows Tools", url: "https://code.visualstudio.com/download", icon: "💻" },
+      { name: "7-Zip", cat: "Windows Tools", url: "https://www.7-zip.org/download.html", icon: "🗜️" },
+      { name: "Firefox Browser", cat: "Browsers", url: "https://www.mozilla.org/firefox/download/", icon: "🦊" },
+      { name: "MacOS 26 Tahoo", cat: "MacOS iSO", url: "https://soft98.ir/os/mac-os-x/16666-mac-win-vmware.html", icon: "💿" },
+      { name: "Opera GX", cat: "Browsers", url: "https://www.opera.com/gx", icon: "🌐" },
+      { name: "Spotify", cat: "Multimedia", url: "https://www.spotify.com/download/", icon: "🎵" },
+      { name: "OBS Studio", cat: "Multimedia", url: "https://dl2.soft98.ir/soft/o/OBS.Studio.27.2.4.x64.rar?1768769583", icon: "📹" },
+      { name: "Telegram Desktop", cat: "Windows Apps", url: "https://desktop.telegram.org/", icon: "✈️" },
+      { name: "Discord", cat: "Windows Apps", url: "https://discord.com/download", icon: "💬" },
+      { name: "Steam", cat: "Windows Apps", url: "https://store.steampowered.com/about/", icon: "🎮" },
+      { name: "Zoom", cat: "Windows Apps", url: "https://zoom.us/download", icon: "📞" },
+      { name: "Blender", cat: "Multimedia", url: "https://www.blender.org/download/", icon: "🎨" },
+      { name: "MacOS 15.7 Sequia", cat: "MacOS iSO", url: "https://edge11.83.ir.cdn.ir/os/macOS.Sequoia.15.0.Virtual.Machines.html", icon: "💿" },
+      { name: "GIMP", cat: "Multimedia", url: "https://www.gimp.org/downloads/", icon: "🖼️" },
+      { name: "Audacity", cat: "Multimedia", url: "https://www.audacityteam.org/download/", icon: "🎙️" },
+      { name: "Python", cat: "Windows Tools", url: "https://www.python.org/downloads/", icon: "🐍" },
+      { name: "Node.js", cat: "Windows Tools", url: "https://nodejs.org/en/download/", icon: "🟢" },
+      { name: "Git", cat: "Windows Tools", url: "https://git-scm.com/downloads", icon: "📂" },
+      { name: "Notepad++", cat: "Windows Tools", url: "https://notepad-plus-plus.org/downloads/", icon: "📝" },
+      { name: "Instagram", cat: "Android Apps", url: "https://play.google.com/store/apps/details?id=com.instagram.android", icon: "📷" },
+      { name: "TikTok", cat: "Android Apps", url: "https://play.google.com/store/apps/details?id=com.zhiliaoapp.musically", icon: "🎵" },
+      { name: "Minecraft PE", cat: "Android Games", url: "https://play.google.com/store/apps/details?id=com.mojang.minecraftpe", icon: "⛏️" },
+      { name: "Among Us", cat: "Android Games", url: "https://play.google.com/store/apps/details?id=com.innersloth.spacemafia", icon: "👥" },
+      { name: "Fedora Workstation", cat: "Linux distros", url: "https://fedoraproject.org/workstation/download/", icon: "🐧" },
+      { name: "Linux Mint", cat: "Linux distros", url: "https://linuxmint.com/download.php", icon: "🍃" },
+      { name: "Debian", cat: "Linux distros", url: "https://www.debian.org/distrib/", icon: "🌀" },
+      { name: "Adobe Illustrator", cat: "Windows Apps", url: "https://www.adobe.com/products/illustrator.html", icon: "🎨" },
+      { name: "Adobe Premiere Pro", cat: "Multimedia", url: "https://www.adobe.com/products/premiere.html", icon: "🎬" },
+      { name: "Photoshop Express", cat: "Android Apps", url: "https://play.google.com/store/apps/details?id=com.adobe.psmobile", icon: "📸" },
+      { name: "CCleaner", cat: "Windows Tools", url: "https://www.ccleaner.com/ccleaner/download", icon: "🧹" },
+      { name: "VirtualBox", cat: "Windows Tools", url: "https://www.virtualbox.org/wiki/Downloads", icon: "📦" },
+      { name: "Brave Browser", cat: "Browsers", url: "https://brave.com/download/", icon: "🦁" },
+      { name: "Microsoft Edge", cat: "Browsers", url: "https://www.microsoft.com/edge/download", icon: "🌊" },
+      { name: "iTunes", cat: "Multimedia", url: "https://www.apple.com/itunes/download/", icon: "🎵" },
+      { name: "Skype", cat: "Windows Apps", url: "https://www.skype.com/en/get-skype/", icon: "📞" },
+      { name: "TeamViewer", cat: "Windows Tools", url: "https://www.teamviewer.com/en/download/", icon: "🖥️" },
+      { name: "Dropbox", cat: "Windows Apps", url: "https://www.dropbox.com/install", icon: "☁️" },
+      { name: "Google Drive Desktop", cat: "Windows Apps", url: "https://www.google.com/drive/download/", icon: "📁" },
+      { name: "Slack", cat: "Windows Apps", url: "https://slack.com/downloads/", icon: "💼" },
+      { name: "Trello", cat: "Windows Apps", url: "https://trello.com/platforms", icon: "📋" },
+      { name: "Notion", cat: "Windows Apps", url: "https://www.notion.so/desktop", icon: "📓" },
+      { name: "Call of Duty Mobile", cat: "Android Games", url: "https://play.google.com/store/apps/details?id=com.activision.callofduty.shooter", icon: "🔫" },
+      { name: "Genshin Impact", cat: "Android Games", url: "https://genshin.hoyoverse.com/", icon: "⚔️" },
+      { name: "Clash of Clans", cat: "Android Games", url: "https://play.google.com/store/apps/details?id=com.supercell.clashofclans", icon: "🏰" },
+      { name: "Candy Crush", cat: "Android Games", url: "https://play.google.com/store/apps/details?id=com.king.candycrushsaga", icon: "🍬" },
+      { name: "YouTube", cat: "Android Apps", url: "https://play.google.com/store/apps/details?id=com.google.android.youtube", icon: "📺" },
+      { name: "Netflix", cat: "Android Apps", url: "https://play.google.com/store/apps/details?id=com.netflix.mediaclient", icon: "🎬" },
+      { name: "Twitter (X)", cat: "Android Apps", url: "https://play.google.com/store/apps/details?id=com.twitter.android", icon: "🐦" },
+      { name: "Facebook", cat: "Android Apps", url: "https://play.google.com/store/apps/details?id=com.facebook.katana", icon: "👥" },
+      { name: "Arch Linux", cat: "Linux distros", url: "https://archlinux.org/download/", icon: "⚙️" },
+      { name: "Kali Linux", cat: "Linux distros", url: "https://www.kali.org/get-kali/", icon: "🔒" }
+    ];
+    
+    moreFiles.forEach((item, i) => {
+      const size = `${50 + (i * 15)}MB`;
+      const version = `v${(i % 10) + 1}.${(i % 20)}`;
+      addFile(item.cat, item.name, size, version, item.icon, item.url);
   function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
 
+    let currentCategory = "همه";
+
+    // Generate particles
+    function createParticles() {
+      const container = document.getElementById('particles');
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 20 + 's';
+        particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+        container.appendChild(particle);
+      }
+    }
+
+    // Render categories
+    function renderCategories() {
+      const list = document.getElementById('categoryList');
+      list.innerHTML = '';
+      categories.forEach(cat => {
+        const count = cat === "همه" ? files.length : files.filter(f => f.category === cat).length;
+        const li = document.createElement('li');
+        li.className = 'category-item' + (cat === currentCategory ? ' active' : '');
+        li.innerHTML = `
+          <span>${cat}</span>
+          <span class="category-count">${count}</span>
+        `;
+        li.onclick = () => {
+          currentCategory = cat;
+          renderCategories();
+          renderFiles();
+        };
+        list.appendChild(li);
+      });
+    }
   if (searchInput) {
     searchInput.addEventListener('input', function () {
       currentQuery = searchInput.value;
@@ -891,6 +1769,43 @@ html:not([dir="rtl"]) .index-item[aria-current="true"] { border-inline-end-color
     });
   }
 
+    // Render files
+    function renderFiles() {
+      const grid = document.getElementById('fileGrid');
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      let filtered = currentCategory === "همه" 
+        ? files 
+        : files.filter(f => f.category === currentCategory);
+      
+      if (searchTerm) {
+        filtered = filtered.filter(f => 
+          f.title.toLowerCase().includes(searchTerm) || 
+          f.category.toLowerCase().includes(searchTerm)
+        );
+      }
+      
+      grid.innerHTML = '';
+      filtered.forEach((file, i) => {
+        const card = document.createElement('div');
+        card.className = 'file-card loading';
+        card.style.animationDelay = (i * 0.05) + 's';
+        card.innerHTML = `
+          <div class="file-icon-wrapper">${file.icon}</div>
+          <div class="file-title">${file.title}</div>
+          <div class="file-meta">
+            <span>📊 ${file.size}</span>
+            <span>🔖 ${file.version}</span>
+          </div>
+          <div class="file-actions">
+            <button class="btn-download" onclick="window.open('${file.downloadUrl}', '_blank')">دانلود</button>
+            <button class="btn-info" onclick="alert('${file.title}\\n\\nحجم: ${file.size}\\nنسخه: ${file.version}\\nدسته: ${file.category}\\n\\nلینک: ${file.downloadUrl}')">ℹ️</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+      
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div style="text-align:center;padding:40px;color:rgba(210,180,140,0.6);">هیچ فایلی یافت نشد</div>';
   if (viewGrid && viewList) {
     viewGrid.addEventListener('click', function () {
       currentView = 'grid';
@@ -916,11 +1831,34 @@ html:not([dir="rtl"]) .index-item[aria-current="true"] { border-inline-end-color
     }
   });
 
+    // Recent updates
+    function renderUpdates() {
+      const container = document.getElementById('recentUpdates');
+      const recent = files.slice(-5).reverse();
+      container.innerHTML = recent.map(f => `
+        <div style="padding: 8px 0; border-bottom: 1px solid rgba(210,180,140,0.1); font-size: 13px; color: rgba(210,180,140,0.7);">
+          ${f.icon} ${f.title}
+        </div>
+      `).join('');
+    }
+
+    // Search functionality
+    document.getElementById('searchInput').addEventListener('input', () => {
+      renderFiles();
+    });
   renderStats();
   renderIndex();
   renderFiles();
 
+    // Initialize
+    createParticles();
+    renderCategories();
+    renderFiles();
+    renderUpdates();
+  </script>
 })();
 </script>
 </body>
 </html>
+<html>
+<!-- </html -->
