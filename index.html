@@ -4,440 +4,215 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DownWib — مرجع نرم‌افزار</title>
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#163f5e">
 <meta name="description" content="فهرست دستی از نرم‌افزارها و ابزارهایی که واقعاً استفاده می‌کنم.">
-<meta name="color-scheme" content="dark light">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230c2224'/><rect x='18' y='22' width='64' height='8' fill='%23f5e6d3'/><rect x='18' y='40' width='40' height='6' fill='%23d2b48c'/><rect x='18' y='54' width='64' height='4' fill='%23a89c85'/></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-:root {
-  color-scheme: dark;
-  --bg: #0c2224; --bg-2: #0f2729; --bg-3: #142e30;
-  --fg: #f5e6d3; --fg-2: #cdc2ab; --dim: #9a9285; --faint: #5c5a50;
-  --line: #1e3a3c; --accent: #d2b48c;
-  --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
-  --fa: 'Vazirmatn', system-ui, -apple-system, 'Segoe UI', Tahoma, sans-serif;
-  --page: 76rem;
-  --gutter: clamp(1.25rem, 4vw, 3rem);
-}
-@media (prefers-color-scheme: light) {
-  :root {
-    color-scheme: light;
-    --bg: #f1e8d5; --bg-2: #e8deca; --bg-3: #dfd4bc;
-    --fg: #0c2224; --fg-2: #1e3a3c; --dim: #4d5852; --faint: #9c9c8c;
-    --line: #d0c4ac; --accent: #8a5a2e;
-  }
-}
+:root{color-scheme:dark;--blue:#3b8fc9;--blue-d:#1f5f8f;--blue-dd:#163f5e;--bg:#0e1820;--card:#15222c;--line:#243644;--fg:#dbe5ec;--dim:#8a9ba8;--link:#6bb8ec;--stripe:#192935;--hover:#1e3342;--head:#1b2d3b;--green:#3aa655;--accent:#7ec0ee}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;background:var(--bg)}
+body{font-family:'Vazirmatn',Tahoma,system-ui,sans-serif;font-size:.875rem;line-height:1.7;color:var(--fg);background:var(--bg);min-height:100dvh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+.wrap{max-width:72rem;margin-inline:auto;padding-inline:.75rem}
 
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 6rem; -webkit-text-size-adjust: 100%; }
-body {
-  font-family: var(--fa); font-size: .9375rem; line-height: 1.7;
-  color: var(--fg); background: var(--bg); min-height: 100dvh; overflow-x: hidden;
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-}
-button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
-input { font: inherit; }
-a { color: inherit; }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-::selection { background: var(--accent); color: var(--bg); }
+/* header */
+.top{background:linear-gradient(#256d9f,var(--blue-d));border-bottom:3px solid var(--blue-dd);padding-top:env(safe-area-inset-top)}
+.top-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:5.5rem;flex-wrap:wrap;padding-block:.5rem}
+.logo{display:block;color:#fff}
+.logo b{display:block;font-size:2.4rem;font-weight:800;line-height:1.1;text-shadow:0 2px 0 rgba(0,0,0,.18)}
+.logo small{display:block;font-size:.72rem;color:#d7ecfa;margin-top:.15rem}
+.search{display:flex;flex:0 1 22rem;min-width:0;width:100%;max-width:22rem}
+.search input{flex:1;min-width:0;min-height:40px;padding:0 .75rem;border:1px solid var(--blue-dd);border-inline-end:0;background:var(--bg);color:var(--fg);border-radius:0 4px 4px 0}
+.search input:focus{outline:2px solid #ffd666;outline-offset:-2px}
+.search span{display:grid;place-items:center;width:44px;background:var(--blue-dd);color:#fff;border-radius:4px 0 0 4px}
 
-.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
-.label, .kicker, .file-cat {
-  font-family: var(--mono); font-size: .75rem; letter-spacing: .12em; text-transform: uppercase;
-}
-.label { color: var(--dim); }
+/* nav */
+.nav{background:var(--blue-dd);overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav ul{list-style:none;display:flex;white-space:nowrap}
+.nav button{display:block;min-height:44px;padding:0 1rem;color:#e6f2fb;background:none;border:0;border-inline-start:1px solid rgba(255,255,255,.12);cursor:pointer;font-size:.8125rem}
+.nav button:hover{background:var(--blue-d)}
+.nav button[aria-current=true]{background:var(--card);color:var(--accent);font-weight:700}
 
-.skip { position: absolute; top: 0; right: -9999px; z-index: 999; padding: .75rem 1rem; background: var(--accent); color: var(--bg); text-decoration: none; }
-.skip:focus { right: 0; }
+/* layout */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 15rem;gap:.75rem;padding-block:.75rem 1.5rem;align-items:start}
+@media(max-width:820px){.layout{grid-template-columns:1fr}.side{order:2}}
 
-/* Header */
-.masthead {
-  position: sticky; top: 0; z-index: 100;
-  background: color-mix(in srgb, var(--bg) 92%, transparent);
-  backdrop-filter: blur(10px); border-bottom: 1px solid var(--fg);
-}
-.masthead-inner, .page { max-width: var(--page); margin-inline: auto; padding-inline: var(--gutter); }
-.masthead-inner { display: flex; align-items: center; gap: 1.25rem; min-height: 4rem; }
-.brand { display: inline-flex; align-items: center; gap: .5rem; text-decoration: none; min-height: 44px; flex-shrink: 0; }
-.brand-mark { width: 22px; height: 22px; display: grid; place-items: center; background: var(--fg); color: var(--bg); font: 500 12px var(--mono); }
-.brand-name { font: 500 .8125rem var(--mono); letter-spacing: .16em; text-transform: uppercase; }
+.box{background:var(--card);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.box-h{display:flex;justify-content:space-between;align-items:center;gap:.5rem;padding:.5rem .75rem;background:var(--head);border-bottom:2px solid var(--blue);font-weight:700;color:var(--accent)}
+.box-h .cnt{font-weight:400;font-size:.75rem;color:var(--dim)}
 
-.search { position: relative; flex: 1; max-width: 32rem; margin-inline: auto 0; }
-.search input {
-  width: 100%; min-height: 44px; padding: .5rem 1rem .5rem 2.5rem;
-  color: var(--fg); background: var(--bg-2); border: 1px solid var(--line); border-radius: 0;
-}
-.search input:focus { outline: none; border-color: var(--accent); background: var(--bg); }
-.search input::placeholder { color: var(--faint); }
-.search-icon { position: absolute; left: .875rem; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; stroke: var(--dim); stroke-width: 2; fill: none; pointer-events: none; }
+/* list */
+.rows{list-style:none}
+.row{display:grid;grid-template-columns:2rem minmax(0,1fr) auto;align-items:center;gap:.6rem;padding:.55rem .75rem;border-bottom:1px solid var(--line)}
+.row:nth-child(even){background:var(--stripe)}
+.row:hover{background:var(--hover)}
+.ic{width:2rem;height:2rem;display:grid;place-items:center;font-size:1.1rem;background:var(--head);border:1px solid var(--line);border-radius:3px}
+.tt{min-width:0}
+.tt a{display:block;font-weight:700;color:var(--link);overflow-wrap:anywhere}
+.tt a:hover{color:#ff8a7a}
+.tt small{display:flex;flex-wrap:wrap;gap:.1rem .75rem;font-size:.72rem;color:var(--dim)}
+.tt small i{font-style:normal;color:var(--green)}
+.dl{min-height:34px;padding:0 .8rem;display:inline-grid;place-items:center;background:var(--green);color:#fff;border-radius:3px;font-size:.78rem;border-bottom:2px solid #2b8a43;white-space:nowrap}
+.dl:hover{background:#2f9449}
+.empty{padding:2.5rem 1rem;text-align:center;color:var(--dim)}
 
-.masthead-meta { display: inline-flex; align-items: center; gap: .5rem; font: .75rem var(--mono); color: var(--dim); white-space: nowrap; }
-.masthead-meta .dot { width: 6px; height: 6px; background: var(--accent); }
+/* sidebar */
+.side{display:grid;gap:.75rem}
+.cats{list-style:none}
+.cats button{display:flex;justify-content:space-between;width:100%;min-height:42px;align-items:center;padding:.3rem .75rem;background:none;border:0;border-bottom:1px dashed var(--line);cursor:pointer;color:var(--fg);text-align:start}
+.cats button:hover{background:var(--hover);color:var(--link)}
+.cats button[aria-current=true]{background:var(--hover);color:var(--accent);font-weight:700}
+.cats .n{font-size:.72rem;background:var(--blue);color:#fff;border-radius:9px;padding:0 .5rem;min-width:1.6rem;text-align:center}
+.about{padding:.75rem;font-size:.8125rem;color:var(--dim);line-height:1.9}
 
-@media (max-width: 780px) {
-  .masthead-inner { flex-wrap: wrap; padding-block: .75rem; gap: .75rem; }
-  .search { order: 3; flex-basis: 100%; max-width: none; margin: 0; }
-  .masthead-meta { display: none; }
-}
-
-/* Intro */
-.intro { padding-block: clamp(2.5rem, 6vw, 4rem) clamp(2rem, 4vw, 3rem); border-bottom: 1px solid var(--line); }
-.intro-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: clamp(2rem, 5vw, 4rem); align-items: end; }
-@media (max-width: 820px) { .intro-grid { grid-template-columns: 1fr; align-items: start; } }
-
-.kicker { color: var(--accent); margin-bottom: 1.25rem; }
-.kicker::before { content: '['; } .kicker::after { content: ']'; }
-.display { font-weight: 700; font-size: clamp(1.875rem, 1.3rem + 2.8vw, 3rem); line-height: 1.25; margin-bottom: 1rem; text-wrap: balance; }
-.display span { color: var(--accent); }
-.lede { font-size: 1.0625rem; line-height: 1.65; color: var(--fg-2); max-width: 46ch; }
-
-.stats { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--fg); border-bottom: 1px solid var(--line); }
-.stats > div { padding: .875rem 0; }
-.stats > div + div { border-inline-start: 1px solid var(--line); padding-inline-start: 1rem; }
-.stats dt { font: .75rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin-bottom: .35rem; }
-.stats dd { font: 500 1.375rem/1 var(--mono); }
-
-/* Catalog */
-.catalog { display: grid; grid-template-columns: 15rem minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3rem); padding-block: clamp(2rem, 4vw, 3rem) clamp(3rem, 6vw, 5rem); }
-@media (max-width: 900px) { .catalog { grid-template-columns: 1fr; gap: 2rem; } .index { position: static !important; } }
-
-.index { position: sticky; top: 5rem; align-self: start; }
-.index-head { display: flex; justify-content: space-between; align-items: baseline; padding-bottom: .5rem; border-bottom: 1px solid var(--fg); margin-bottom: .75rem; }
-.index-head .label { color: var(--fg); }
-.index-head .count { font: .75rem var(--mono); color: var(--dim); }
-.index-list { list-style: none; }
-.index-item {
-  display: flex; align-items: center; justify-content: space-between; gap: .75rem;
-  width: 100%; min-height: 44px; padding: .5rem .75rem; font-size: .8125rem; color: var(--fg-2);
-  text-align: start; border-inline-start: 2px solid transparent;
-}
-.index-item:hover { color: var(--fg); background: var(--bg-2); }
-.index-item[aria-current="true"] { color: var(--accent); background: var(--bg-2); border-inline-start-color: var(--accent); }
-.index-item .n { font: .75rem var(--mono); color: var(--faint); }
-.index-item[aria-current="true"] .n { color: var(--accent); }
-
-.listing-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding-bottom: .75rem; border-bottom: 1px solid var(--fg); }
-.listing-head h2 { font-size: 1.125rem; font-weight: 600; }
-.view-toggle { display: inline-flex; border: 1px solid var(--line); }
-.view-toggle button { min-height: 32px; padding: 0 .75rem; font: .75rem var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--dim); }
-.view-toggle button + button { border-inline-start: 1px solid var(--line); }
-.view-toggle button:hover { color: var(--fg); }
-.view-toggle button[aria-pressed="true"] { color: var(--bg); background: var(--fg); }
-
-.files { display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); border-inline-start: 1px solid var(--line); }
-.files[data-view="list"] { grid-template-columns: 1fr; }
-.file { display: flex; flex-direction: column; gap: .5rem; padding: 1rem; border-bottom: 1px solid var(--line); border-inline-end: 1px solid var(--line); }
-.file:hover { background: var(--bg-2); }
-.file-head { display: flex; align-items: flex-start; gap: .75rem; min-width: 0; }
-.file-icon { flex-shrink: 0; width: 32px; height: 32px; display: grid; place-items: center; background: var(--bg-3); border: 1px solid var(--line); font-size: 16px; }
-.file-title { font-size: .9375rem; font-weight: 600; line-height: 1.4; overflow-wrap: anywhere; }
-.file-meta { display: flex; flex-wrap: wrap; gap: .25rem .75rem; font: .75rem var(--mono); color: var(--dim); }
-.file-meta .sep { color: var(--faint); }
-.file-cat { color: var(--dim); letter-spacing: .08em; }
-.file-foot { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-top: auto; padding-top: .5rem; }
-.file-download {
-  display: inline-flex; align-items: center; gap: .375rem; min-height: 40px; padding: 0 .75rem;
-  font: 500 .75rem var(--mono); letter-spacing: .1em; text-transform: uppercase;
-  color: var(--bg); background: var(--fg); text-decoration: none;
-}
-.file-download:hover { background: var(--accent); }
-.file-download::after { content: '↓'; font-size: 13px; }
-
-.files[data-view="list"] .file { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; align-items: center; gap: 1.5rem; padding: .875rem 1rem; }
-.files[data-view="list"] .file-foot { margin: 0; padding: 0; }
-@media (max-width: 640px) { .files[data-view="list"] .file { grid-template-columns: 1fr; gap: .5rem; } }
-
-.empty { grid-column: 1 / -1; padding: 3rem 1rem; text-align: center; font: .8125rem var(--mono); color: var(--dim); border-bottom: 1px solid var(--line); border-inline-end: 1px solid var(--line); }
-
-/* Footer */
-.colophon { border-top: 1px solid var(--fg); padding-block: 1.5rem 2rem; display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1.5rem; font: .75rem var(--mono); color: var(--dim); }
-.colophon a { text-decoration: none; border-bottom: 1px solid var(--line); }
-.colophon a:hover { color: var(--accent); border-color: var(--accent); }
-.colophon .sep { color: var(--faint); padding-inline: .4rem; }
-
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  * { transition-duration: .001ms !important; animation-duration: .001ms !important; }
-}
+footer{background:var(--blue-dd);color:#b9d6ec;font-size:.75rem;padding:1rem 0 calc(1rem + env(safe-area-inset-bottom))}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.25rem 1rem}
+footer a{border-bottom:1px solid rgba(255,255,255,.4)}
 </style>
 </head>
 <body>
+<header class="top"><div class="wrap top-in">
+  <a class="logo" href="#"><b>DownWib</b><small>مرجع دانلود نرم‌افزار، بازی و سیستم‌عامل</small></a>
+  <label class="search"><input type="search" id="q" placeholder="جستجوی نرم‌افزار..." aria-label="جستجو"><span aria-hidden="true">🔍</span></label>
+</div></header>
+<nav class="nav" aria-label="دسته‌ها"><div class="wrap"><ul id="nav"></ul></div></nav>
 
-<a class="skip" href="#files">پرش به فهرست</a>
-
-<header class="masthead">
-  <div class="masthead-inner">
-    <a class="brand" href="#top" aria-label="DownWib — خانه">
-      <span class="brand-mark" aria-hidden="true">D</span>
-      <span class="brand-name">DownWib</span>
-    </a>
-    <div class="search">
-      <input type="search" id="searchInput" placeholder="جستجو در فایل‌ها، دسته‌ها، نسخه‌ها…" aria-label="جستجو">
-      <svg class="search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-    </div>
-    <p class="masthead-meta"><span class="dot" aria-hidden="true"></span><span id="metaCount">—</span></p>
-  </div>
-</header>
-
-<main class="page" id="top">
-
-  <section class="intro">
-    <div class="intro-grid">
-      <div>
-        <p class="kicker">مرجع دانلود — نسخه ۰۱</p>
-        <h1 class="display">فهرستی ساده از نرم‌افزارهایی که <span>واقعاً استفاده می‌کنم.</span></h1>
-        <p class="lede">بدون صفحه‌های واسط، بدون ریدایرکت، بدون تبلیغ. هر لینک به صفحهٔ رسمی سازنده می‌رود. دسته‌بندی شده، برچسب‌گذاری شده، و مرتب به‌روز می‌شود.</p>
-      </div>
-      <dl class="stats">
-        <div><dt>فایل</dt><dd id="statFiles">—</dd></div>
-        <div><dt>دسته</dt><dd id="statCats">—</dd></div>
-        <div><dt>پلتفرم</dt><dd id="statPlatforms">—</dd></div>
-      </dl>
-    </div>
+<main class="wrap layout">
+  <section class="box" aria-labelledby="ttl">
+    <div class="box-h"><span id="ttl">آخرین نرم‌افزارها</span><span class="cnt" id="cnt"></span></div>
+    <ul class="rows" id="rows"></ul>
   </section>
-
-  <div class="catalog">
-    <aside class="index" aria-label="دسته‌بندی">
-      <div class="index-head">
-        <span class="label">فهرست</span>
-        <span class="count num" id="indexCount">—</span>
-      </div>
-      <nav aria-label="دسته‌ها"><ul class="index-list" id="indexList"></ul></nav>
-    </aside>
-
-    <section class="listing" id="files" aria-labelledby="listingTitle">
-      <header class="listing-head">
-        <h2 id="listingTitle">لیست دانلود</h2>
-        <div class="view-toggle" role="group" aria-label="نمایش">
-          <button type="button" id="viewGrid" aria-pressed="true">شبکه</button>
-          <button type="button" id="viewList" aria-pressed="false">فهرست</button>
-        </div>
-      </header>
-      <div class="files" id="fileGrid" data-view="grid"></div>
-    </section>
-  </div>
-
-  <footer class="colophon">
-    <span>
-      <strong>DownWib</strong><span class="sep" aria-hidden="true">·</span>
-      ساخته‌شده توسط <a href="https://github.com/AyhanMansur" target="_blank" rel="noopener">آیهان منصور</a>
-      <span class="sep" aria-hidden="true">·</span>۱۴۰۳–۱۴۰۵
-    </span>
-    <span>یک فایل HTML<span class="sep" aria-hidden="true">·</span>بدون ردیاب</span>
-  </footer>
+  <aside class="side">
+    <div class="box"><div class="box-h">دسته‌بندی</div><ul class="cats" id="cats"></ul></div>
+    <div class="box"><div class="box-h">دربارهٔ سایت</div><p class="about">بدون صفحهٔ واسط و تبلیغ. هر لینک به صفحهٔ رسمی سازنده می‌رود.</p></div>
+  </aside>
 </main>
 
+<footer><div class="wrap">
+  <span><b>DownWib</b> · ساخته‌شده توسط <a href="https://github.com/AyhanMansur" target="_blank" rel="noopener">آیهان منصور</a> · ۱۴۰۳–۱۴۰۵</span>
+  <span>یک فایل HTML · بدون ردیاب</span>
+</div></footer>
+
 <script>
-(function () {
-  'use strict';
+(function(){'use strict';
+var ALL='همه';
+var CATS=['ویندوز — برنامه','ویندوز — ابزار','ویندوز — ISO','مک','اندروید — برنامه','اندروید — بازی','لینوکس','مرورگر','چندرسانه‌ای','iOS'];
+var FILES=[
+['ویندوز — برنامه','Adobe Photoshop 2024','2.5 GB','25.0','🎨','https://www.adobe.com/products/photoshop/free-trial-download.html'],
+['ویندوز — برنامه','Internet Download Manager','12 MB','6.42','⬇️','https://www.internetdownloadmanager.com/download.html'],
+['ویندوز — برنامه','Microsoft Office 2024','4.1 GB','16.0','📊','https://www.microsoft.com/microsoft-365/try'],
+['ویندوز — برنامه','Telegram Desktop','58 MB','5.5','✈️','https://desktop.telegram.org/'],
+['ویندوز — برنامه','Discord','92 MB','1.0.9','💬','https://discord.com/download'],
+['ویندوز — برنامه','Steam','4 MB','3.0','🎮','https://store.steampowered.com/about/'],
+['ویندوز — برنامه','Zoom','78 MB','6.2','📞','https://zoom.us/download'],
+['ویندوز — برنامه','Skype','110 MB','8.131','📞','https://www.skype.com/en/get-skype/'],
+['ویندوز — برنامه','Dropbox','145 MB','196.4','☁️','https://www.dropbox.com/install'],
+['ویندوز — برنامه','Google Drive Desktop','168 MB','110.0','📁','https://www.google.com/drive/download/'],
+['ویندوز — برنامه','Slack','148 MB','4.38','💼','https://slack.com/downloads/'],
+['ویندوز — برنامه','Trello','90 MB','2.14','📋','https://trello.com/platforms'],
+['ویندوز — برنامه','Notion','130 MB','4.3','📓','https://www.notion.so/desktop'],
+['ویندوز — برنامه','Adobe Illustrator 2024','2.9 GB','28.0','🎨','https://www.adobe.com/products/illustrator.html'],
+['ویندوز — ابزار','WinRAR','3 MB','6.24','📦','https://www.win-rar.com/download.html'],
+['ویندوز — ابزار','Visual Studio Code','95 MB','1.85','💻','https://code.visualstudio.com/download'],
+['ویندوز — ابزار','7-Zip','1.8 MB','23.01','🗜️','https://www.7-zip.org/download.html'],
+['ویندوز — ابزار','Python','28 MB','3.12','🐍','https://www.python.org/downloads/'],
+['ویندوز — ابزار','Node.js','32 MB','20.11','🟢','https://nodejs.org/en/download/'],
+['ویندوز — ابزار','Git','52 MB','2.43','📂','https://git-scm.com/downloads'],
+['ویندوز — ابزار','Notepad++','4.5 MB','8.6','📝','https://notepad-plus-plus.org/downloads/'],
+['ویندوز — ابزار','CCleaner','28 MB','6.22','🧹','https://www.ccleaner.com/ccleaner/download'],
+['ویندوز — ابزار','VirtualBox','105 MB','7.0','📦','https://www.virtualbox.org/wiki/Downloads'],
+['ویندوز — ابزار','TeamViewer','90 MB','15.50','🖥️','https://www.teamviewer.com/en/download/'],
+['ویندوز — ISO','Windows 11 Pro','5.2 GB','24H2','💿','https://www.microsoft.com/software-download/windows11'],
+['ویندوز — ISO','Windows 10','4.8 GB','22H2','💿','https://www.microsoft.com/software-download/windows10'],
+['مک','macOS 15 Sequoia','14 GB','15.2','💿','https://www.apple.com/macos/sequoia/'],
+['مک','macOS 14 Sonoma','13 GB','14.7','💿','https://www.apple.com/macos/sonoma/'],
+['اندروید — برنامه','WhatsApp','75 MB','2.25','💬','https://www.whatsapp.com/download'],
+['اندروید — برنامه','Instagram','70 MB','345.0','📷','https://play.google.com/store/apps/details?id=com.instagram.android'],
+['اندروید — برنامه','TikTok','180 MB','38.4','🎵','https://play.google.com/store/apps/details?id=com.zhiliaoapp.musically'],
+['اندروید — برنامه','Photoshop Express','95 MB','13.4','📸','https://play.google.com/store/apps/details?id=com.adobe.psmobile'],
+['اندروید — برنامه','YouTube','160 MB','19.14','📺','https://play.google.com/store/apps/details?id=com.google.android.youtube'],
+['اندروید — برنامه','Netflix','45 MB','8.129','🎬','https://play.google.com/store/apps/details?id=com.netflix.mediaclient'],
+['اندروید — برنامه','X (Twitter)','95 MB','11.2','🐦','https://play.google.com/store/apps/details?id=com.twitter.android'],
+['اندروید — برنامه','Facebook','95 MB','466.1','👥','https://play.google.com/store/apps/details?id=com.facebook.katana'],
+['اندروید — بازی','PUBG Mobile','1.8 GB','3.2','🎮','https://www.pubgmobile.com/'],
+['اندروید — بازی','Minecraft PE','880 MB','1.21','⛏️','https://play.google.com/store/apps/details?id=com.mojang.minecraftpe'],
+['اندروید — بازی','Among Us','180 MB','2024.11','👥','https://play.google.com/store/apps/details?id=com.innersloth.spacemafia'],
+['اندروید — بازی','Call of Duty Mobile','2.4 GB','1.0.48','🔫','https://play.google.com/store/apps/details?id=com.activision.callofduty.shooter'],
+['اندروید — بازی','Genshin Impact','3.5 GB','5.4','⚔️','https://genshin.hoyoverse.com/'],
+['اندروید — بازی','Clash of Clans','320 MB','16.1','🏰','https://play.google.com/store/apps/details?id=com.supercell.clashofclans'],
+['اندروید — بازی','Candy Crush Saga','90 MB','1.285','🍬','https://play.google.com/store/apps/details?id=com.king.candycrushsaga'],
+['لینوکس','Ubuntu 24.04 LTS','4.2 GB','24.04','🐧','https://ubuntu.com/download/desktop'],
+['لینوکس','Fedora Workstation 41','2.1 GB','41','🐧','https://fedoraproject.org/workstation/download/'],
+['لینوکس','Linux Mint 22','2.5 GB','22','🍃','https://linuxmint.com/download.php'],
+['لینوکس','Debian 13','3.6 GB','13','🌀','https://www.debian.org/distrib/'],
+['لینوکس','Arch Linux','1.1 GB','2026.02','⚙️','https://archlinux.org/download/'],
+['لینوکس','Kali Linux','4.0 GB','2025.4','🔒','https://www.kali.org/get-kali/'],
+['مرورگر','Google Chrome','90 MB','134.0','🌐','https://www.google.com/chrome/'],
+['مرورگر','Mozilla Firefox','58 MB','135.0','🦊','https://www.mozilla.org/firefox/download/'],
+['مرورگر','Opera GX','110 MB','118.0','🌐','https://www.opera.com/gx'],
+['مرورگر','Brave','145 MB','1.76','🦁','https://brave.com/download/'],
+['مرورگر','Microsoft Edge','180 MB','134.0','🌊','https://www.microsoft.com/edge/download'],
+['چندرسانه‌ای','VLC Media Player','45 MB','3.0.21','🎬','https://www.videolan.org/vlc/'],
+['چندرسانه‌ای','Spotify','95 MB','1.2.60','🎵','https://www.spotify.com/download/'],
+['چندرسانه‌ای','OBS Studio','150 MB','31.0','📹','https://obsproject.com/download'],
+['چندرسانه‌ای','Blender','320 MB','4.3','🎨','https://www.blender.org/download/'],
+['چندرسانه‌ای','GIMP','280 MB','2.10.38','🖼️','https://www.gimp.org/downloads/'],
+['چندرسانه‌ای','Audacity','45 MB','3.7','🎙️','https://www.audacityteam.org/download/'],
+['چندرسانه‌ای','iTunes','230 MB','12.13','🎵','https://www.apple.com/itunes/download/'],
+['چندرسانه‌ای','Adobe Premiere Pro 2024','3.8 GB','25.0','🎬','https://www.adobe.com/products/premiere.html'],
+['iOS','WhatsApp','170 MB','25.1','💬','https://apps.apple.com/app/whatsapp-messenger/id310633997'],
+['iOS','Instagram','260 MB','345.0','📷','https://apps.apple.com/app/instagram/id389801252'],
+['iOS','Telegram','210 MB','11.4','✈️','https://apps.apple.com/app/telegram-messenger/id686449807']
+].map(function(r){return{category:r[0],title:r[1],size:r[2],version:r[3],icon:r[4],url:r[5]}});
 
-  var ALL = 'همه';
+var state={category:ALL,query:''};
+var $=function(id){return document.getElementById(id)};
+function fa(n){return String(n).replace(/\d/g,function(d){return'۰۱۲۳۴۵۶۷۸۹'[d]})}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function countIn(c){return c===ALL?FILES.length:FILES.filter(function(f){return f.category===c}).length}
 
-  var CATEGORIES = [
-    'ویندوز — برنامه', 'ویندوز — ابزار', 'ویندوز — ISO', 'مک',
-    'اندروید — برنامه', 'اندروید — بازی', 'لینوکس', 'مرورگر',
-    'چندرسانه‌ای', 'iOS'
-  ];
-
-  // [category, title, size, version, icon, url]
-  var FILES = [
-    ['ویندوز — برنامه', 'Adobe Photoshop 2024',      '2.5 GB', '25.0',   '🎨', 'https://www.adobe.com/products/photoshop/free-trial-download.html'],
-    ['ویندوز — برنامه', 'Internet Download Manager', '12 MB',  '6.42',   '⬇️', 'https://www.internetdownloadmanager.com/download.html'],
-    ['ویندوز — برنامه', 'Microsoft Office 2024',     '4.1 GB', '16.0',   '📊', 'https://www.microsoft.com/microsoft-365/try'],
-    ['ویندوز — برنامه', 'Telegram Desktop',          '58 MB',  '5.5',    '✈️', 'https://desktop.telegram.org/'],
-    ['ویندوز — برنامه', 'Discord',                   '92 MB',  '1.0.9',  '💬', 'https://discord.com/download'],
-    ['ویندوز — برنامه', 'Steam',                     '4 MB',   '3.0',    '🎮', 'https://store.steampowered.com/about/'],
-    ['ویندوز — برنامه', 'Zoom',                      '78 MB',  '6.2',    '📞', 'https://zoom.us/download'],
-    ['ویندوز — برنامه', 'Skype',                     '110 MB', '8.131',  '📞', 'https://www.skype.com/en/get-skype/'],
-    ['ویندوز — برنامه', 'Dropbox',                   '145 MB', '196.4',  '☁️', 'https://www.dropbox.com/install'],
-    ['ویندوز — برنامه', 'Google Drive Desktop',      '168 MB', '110.0',  '📁', 'https://www.google.com/drive/download/'],
-    ['ویندوز — برنامه', 'Slack',                     '148 MB', '4.38',   '💼', 'https://slack.com/downloads/'],
-    ['ویندوز — برنامه', 'Trello',                    '90 MB',  '2.14',   '📋', 'https://trello.com/platforms'],
-    ['ویندوز — برنامه', 'Notion',                    '130 MB', '4.3',    '📓', 'https://www.notion.so/desktop'],
-    ['ویندوز — برنامه', 'Adobe Illustrator 2024',    '2.9 GB', '28.0',   '🎨', 'https://www.adobe.com/products/illustrator.html'],
-
-    ['ویندوز — ابزار',  'WinRAR',                    '3 MB',   '6.24',   '📦', 'https://www.win-rar.com/download.html'],
-    ['ویندوز — ابزار',  'Visual Studio Code',        '95 MB',  '1.85',   '💻', 'https://code.visualstudio.com/download'],
-    ['ویندوز — ابزار',  '7-Zip',                     '1.8 MB', '23.01',  '🗜️', 'https://www.7-zip.org/download.html'],
-    ['ویندوز — ابزار',  'Python',                    '28 MB',  '3.12',   '🐍', 'https://www.python.org/downloads/'],
-    ['ویندوز — ابزار',  'Node.js',                   '32 MB',  '20.11',  '🟢', 'https://nodejs.org/en/download/'],
-    ['ویندوز — ابزار',  'Git',                       '52 MB',  '2.43',   '📂', 'https://git-scm.com/downloads'],
-    ['ویندوز — ابزار',  'Notepad++',                 '4.5 MB', '8.6',    '📝', 'https://notepad-plus-plus.org/downloads/'],
-    ['ویندوز — ابزار',  'CCleaner',                  '28 MB',  '6.22',   '🧹', 'https://www.ccleaner.com/ccleaner/download'],
-    ['ویندوز — ابزار',  'VirtualBox',                '105 MB', '7.0',    '📦', 'https://www.virtualbox.org/wiki/Downloads'],
-    ['ویندوز — ابزار',  'TeamViewer',                '90 MB',  '15.50',  '🖥️', 'https://www.teamviewer.com/en/download/'],
-
-    ['ویندوز — ISO',    'Windows 11 Pro',            '5.2 GB', '24H2',   '💿', 'https://www.microsoft.com/software-download/windows11'],
-    ['ویندوز — ISO',    'Windows 10',                '4.8 GB', '22H2',   '💿', 'https://www.microsoft.com/software-download/windows10'],
-
-    ['مک',              'macOS 15 Sequoia',          '14 GB',  '15.2',   '💿', 'https://www.apple.com/macos/sequoia/'],
-    ['مک',              'macOS 14 Sonoma',           '13 GB',  '14.7',   '💿', 'https://www.apple.com/macos/sonoma/'],
-
-    ['اندروید — برنامه', 'WhatsApp',                 '75 MB',  '2.25',   '💬', 'https://www.whatsapp.com/download'],
-    ['اندروید — برنامه', 'Instagram',                '70 MB',  '345.0',  '📷', 'https://play.google.com/store/apps/details?id=com.instagram.android'],
-    ['اندروید — برنامه', 'TikTok',                   '180 MB', '38.4',   '🎵', 'https://play.google.com/store/apps/details?id=com.zhiliaoapp.musically'],
-    ['اندروید — برنامه', 'Photoshop Express',        '95 MB',  '13.4',   '📸', 'https://play.google.com/store/apps/details?id=com.adobe.psmobile'],
-    ['اندروید — برنامه', 'YouTube',                  '160 MB', '19.14',  '📺', 'https://play.google.com/store/apps/details?id=com.google.android.youtube'],
-    ['اندروید — برنامه', 'Netflix',                  '45 MB',  '8.129',  '🎬', 'https://play.google.com/store/apps/details?id=com.netflix.mediaclient'],
-    ['اندروید — برنامه', 'X (Twitter)',              '95 MB',  '11.2',   '🐦', 'https://play.google.com/store/apps/details?id=com.twitter.android'],
-    ['اندروید — برنامه', 'Facebook',                 '95 MB',  '466.1',  '👥', 'https://play.google.com/store/apps/details?id=com.facebook.katana'],
-
-    ['اندروید — بازی',  'PUBG Mobile',               '1.8 GB', '3.2',    '🎮', 'https://www.pubgmobile.com/'],
-    ['اندروید — بازی',  'Minecraft PE',              '880 MB', '1.21',   '⛏️', 'https://play.google.com/store/apps/details?id=com.mojang.minecraftpe'],
-    ['اندروید — بازی',  'Among Us',                  '180 MB', '2024.11','👥', 'https://play.google.com/store/apps/details?id=com.innersloth.spacemafia'],
-    ['اندروید — بازی',  'Call of Duty Mobile',       '2.4 GB', '1.0.48', '🔫', 'https://play.google.com/store/apps/details?id=com.activision.callofduty.shooter'],
-    ['اندروید — بازی',  'Genshin Impact',            '3.5 GB', '5.4',    '⚔️', 'https://genshin.hoyoverse.com/'],
-    ['اندروید — بازی',  'Clash of Clans',            '320 MB', '16.1',   '🏰', 'https://play.google.com/store/apps/details?id=com.supercell.clashofclans'],
-    ['اندروید — بازی',  'Candy Crush Saga',          '90 MB',  '1.285',  '🍬', 'https://play.google.com/store/apps/details?id=com.king.candycrushsaga'],
-
-    ['لینوکس',          'Ubuntu 24.04 LTS',          '4.2 GB', '24.04',  '🐧', 'https://ubuntu.com/download/desktop'],
-    ['لینوکس',          'Fedora Workstation 41',     '2.1 GB', '41',     '🐧', 'https://fedoraproject.org/workstation/download/'],
-    ['لینوکس',          'Linux Mint 22',             '2.5 GB', '22',     '🍃', 'https://linuxmint.com/download.php'],
-    ['لینوکس',          'Debian 13',                 '3.6 GB', '13',     '🌀', 'https://www.debian.org/distrib/'],
-    ['لینوکس',          'Arch Linux',                '1.1 GB', '2026.02','⚙️', 'https://archlinux.org/download/'],
-    ['لینوکس',          'Kali Linux',                '4.0 GB', '2025.4', '🔒', 'https://www.kali.org/get-kali/'],
-
-    ['مرورگر',          'Google Chrome',             '90 MB',  '134.0',  '🌐', 'https://www.google.com/chrome/'],
-    ['مرورگر',          'Mozilla Firefox',           '58 MB',  '135.0',  '🦊', 'https://www.mozilla.org/firefox/download/'],
-    ['مرورگر',          'Opera GX',                  '110 MB', '118.0',  '🌐', 'https://www.opera.com/gx'],
-    ['مرورگر',          'Brave',                     '145 MB', '1.76',   '🦁', 'https://brave.com/download/'],
-    ['مرورگر',          'Microsoft Edge',            '180 MB', '134.0',  '🌊', 'https://www.microsoft.com/edge/download'],
-
-    ['چندرسانه‌ای',     'VLC Media Player',          '45 MB',  '3.0.21', '🎬', 'https://www.videolan.org/vlc/'],
-    ['چندرسانه‌ای',     'Spotify',                   '95 MB',  '1.2.60', '🎵', 'https://www.spotify.com/download/'],
-    ['چندرسانه‌ای',     'OBS Studio',                '150 MB', '31.0',   '📹', 'https://obsproject.com/download'],
-    ['چندرسانه‌ای',     'Blender',                   '320 MB', '4.3',    '🎨', 'https://www.blender.org/download/'],
-    ['چندرسانه‌ای',     'GIMP',                      '280 MB', '2.10.38','🖼️', 'https://www.gimp.org/downloads/'],
-    ['چندرسانه‌ای',     'Audacity',                  '45 MB',  '3.7',    '🎙️', 'https://www.audacityteam.org/download/'],
-    ['چندرسانه‌ای',     'iTunes',                    '230 MB', '12.13',  '🎵', 'https://www.apple.com/itunes/download/'],
-    ['چندرسانه‌ای',     'Adobe Premiere Pro 2024',   '3.8 GB', '25.0',   '🎬', 'https://www.adobe.com/products/premiere.html'],
-
-    ['iOS',             'WhatsApp',                  '170 MB', '25.1',   '💬', 'https://apps.apple.com/app/whatsapp-messenger/id310633997'],
-    ['iOS',             'Instagram',                 '260 MB', '345.0',  '📷', 'https://apps.apple.com/app/instagram/id389801252'],
-    ['iOS',             'Telegram',                  '210 MB', '11.4',   '✈️', 'https://apps.apple.com/app/telegram-messenger/id686449807']
-  ].map(function (r) {
-    return { category: r[0], title: r[1], size: r[2], version: r[3], icon: r[4], url: r[5] };
+function renderMenus(){
+  var nav=$('nav'),cats=$('cats');nav.innerHTML='';cats.innerHTML='';
+  [ALL].concat(CATS).forEach(function(c){
+    function pick(){state.category=c;renderMenus();renderRows();window.scrollTo({top:0,behavior:'smooth'})}
+    var li=document.createElement('li'),b=document.createElement('button');
+    b.type='button';b.textContent=c;b.setAttribute('aria-current',String(c===state.category));
+    b.addEventListener('click',pick);li.appendChild(b);nav.appendChild(li);
+    var li2=document.createElement('li'),b2=document.createElement('button');
+    b2.type='button';b2.setAttribute('aria-current',String(c===state.category));
+    b2.innerHTML='<span>'+esc(c)+'</span><span class="n">'+fa(countIn(c))+'</span>';
+    b2.addEventListener('click',pick);li2.appendChild(b2);cats.appendChild(li2);
   });
+}
 
-  var state = { category: ALL, query: '', view: 'grid' };
-
-  var $ = function (id) { return document.getElementById(id); };
-  var grid = $('fileGrid'), indexList = $('indexList'), searchInput = $('searchInput');
-
-  function fa(n) {
-    return String(n).replace(/\d/g, function (d) { return '۰۱۲۳۴۵۶۷۸۹'[d]; });
-  }
-
-  function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-    });
-  }
-
-  function countIn(cat) {
-    return cat === ALL ? FILES.length : FILES.filter(function (f) { return f.category === cat; }).length;
-  }
-
-  function renderStats() {
-    var platforms = {};
-    FILES.forEach(function (f) { platforms[f.category.split('—')[0].trim()] = true; });
-    $('statFiles').textContent = fa(FILES.length);
-    $('statCats').textContent = fa(CATEGORIES.length);
-    $('statPlatforms').textContent = fa(Object.keys(platforms).length);
-    $('metaCount').textContent = fa(FILES.length) + ' فایل';
-  }
-
-  function renderIndex() {
-    indexList.innerHTML = '';
-    [ALL].concat(CATEGORIES).forEach(function (cat) {
-      var li = document.createElement('li');
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'index-item';
-      btn.setAttribute('aria-current', String(cat === state.category));
-      btn.innerHTML = '<span>' + escapeHtml(cat) + '</span><span class="n num">' + fa(countIn(cat)) + '</span>';
-      btn.addEventListener('click', function () {
-        state.category = cat;
-        renderIndex();
-        renderFiles();
-      });
-      li.appendChild(btn);
-      indexList.appendChild(li);
-    });
-    $('indexCount').textContent = fa(countIn(state.category)) + ' / ' + fa(FILES.length);
-  }
-
-  function renderFiles() {
-    var q = state.query.trim().toLowerCase();
-    var rows = FILES.filter(function (f) {
-      if (state.category !== ALL && f.category !== state.category) return false;
-      if (!q) return true;
-      return f.title.toLowerCase().indexOf(q) > -1 ||
-             f.category.toLowerCase().indexOf(q) > -1 ||
-             f.version.toLowerCase().indexOf(q) > -1;
-    });
-
-    $('listingTitle').textContent = state.category === ALL ? 'لیست دانلود' : state.category;
-    grid.setAttribute('data-view', state.view);
-    grid.innerHTML = '';
-
-    if (!rows.length) {
-      var empty = document.createElement('div');
-      empty.className = 'empty';
-      empty.textContent = 'چیزی پیدا نشد.';
-      grid.appendChild(empty);
-      return;
-    }
-
-    rows.forEach(function (f) {
-      var card = document.createElement('article');
-      card.className = 'file';
-      card.innerHTML =
-        '<div class="file-head">' +
-          '<span class="file-icon" aria-hidden="true">' + f.icon + '</span>' +
-          '<h3 class="file-title">' + escapeHtml(f.title) + '</h3>' +
-        '</div>' +
-        '<p class="file-meta">' +
-          '<span class="num">' + escapeHtml(f.size) + '</span>' +
-          '<span class="sep" aria-hidden="true">·</span>' +
-          '<span class="num">v' + escapeHtml(f.version) + '</span>' +
-        '</p>' +
-        '<div class="file-foot">' +
-          '<span class="file-cat">' + escapeHtml(f.category) + '</span>' +
-          '<a class="file-download" href="' + escapeHtml(f.url) + '" target="_blank" rel="noopener" title="صفحهٔ رسمی سازنده">دریافت</a>' +
-        '</div>';
-      grid.appendChild(card);
-    });
-  }
-
-  function setView(view) {
-    state.view = view;
-    $('viewGrid').setAttribute('aria-pressed', String(view === 'grid'));
-    $('viewList').setAttribute('aria-pressed', String(view === 'list'));
-    renderFiles();
-  }
-
-  searchInput.addEventListener('input', function () {
-    state.query = searchInput.value;
-    renderFiles();
+function renderRows(){
+  var q=state.query.trim().toLowerCase();
+  var rows=FILES.filter(function(f){
+    if(state.category!==ALL&&f.category!==state.category)return false;
+    if(!q)return true;
+    return f.title.toLowerCase().indexOf(q)>-1||f.category.toLowerCase().indexOf(q)>-1||f.version.toLowerCase().indexOf(q)>-1;
   });
-  $('viewGrid').addEventListener('click', function () { setView('grid'); });
-  $('viewList').addEventListener('click', function () { setView('list'); });
+  $('ttl').textContent=state.category===ALL?'آخرین نرم‌افزارها':state.category;
+  $('cnt').textContent=fa(rows.length)+' مورد';
+  var ul=$('rows');
+  if(!rows.length){ul.innerHTML='<li class="empty">چیزی پیدا نشد.</li>';return}
+  ul.innerHTML=rows.map(function(f){
+    return '<li class="row"><span class="ic" aria-hidden="true">'+f.icon+'</span>'+
+      '<div class="tt"><a href="'+esc(f.url)+'" target="_blank" rel="noopener">'+esc(f.title)+' <span dir="ltr">'+esc(f.version)+'</span></a>'+
+      '<small><span>'+esc(f.category)+'</span><span>حجم: <i dir="ltr">'+esc(f.size)+'</i></span></small></div>'+
+      '<a class="dl" href="'+esc(f.url)+'" target="_blank" rel="noopener" title="صفحهٔ رسمی سازنده">دریافت</a></li>';
+  }).join('');
+}
 
-  // کلید / برای رفتن به جستجو
-  document.addEventListener('keydown', function (e) {
-    var tag = (document.activeElement && document.activeElement.tagName) || '';
-    if (e.key === '/' && tag !== 'INPUT' && tag !== 'TEXTAREA') {
-      e.preventDefault();
-      searchInput.focus();
-    }
-  });
-
-  renderStats();
-  renderIndex();
-  renderFiles();
+$('q').addEventListener('input',function(e){state.query=e.target.value;renderRows()});
+document.addEventListener('keydown',function(e){
+  var t=(document.activeElement&&document.activeElement.tagName)||'';
+  if(e.key==='/'&&t!=='INPUT'){e.preventDefault();$('q').focus()}
+});
+renderMenus();renderRows();
 })();
 </script>
 </body>
