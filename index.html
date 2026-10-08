@@ -12,7 +12,7 @@
 :root{color-scheme:dark;--blue:#3b8fc9;--blue-d:#1f5f8f;--blue-dd:#163f5e;--bg:#0e1820;--card:#15222c;--line:#243644;--fg:#dbe5ec;--dim:#8a9ba8;--link:#6bb8ec;--stripe:#192935;--hover:#1e3342;--head:#1b2d3b;--green:#3aa655;--accent:#7ec0ee}
 *{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;background:var(--bg)}
-body{font-family:'Vazirmatn',Tahoma,system-ui,sans-serif;font-size:.875rem;line-height:1.7;color:var(--fg);background:var(--bg);min-height:100dvh;overflow-x:hidden}
+body{font-family:'Vazirmatn',Tahoma,system-ui,sans-serif;font-size:.875rem;line-height:1.7;color:var(--fg);background:var(--bg);}
 a{color:inherit;text-decoration:none}
 button,input{font:inherit}
 .wrap{max-width:72rem;margin-inline:auto;padding-inline:.75rem}
@@ -21,7 +21,7 @@ button,input{font:inherit}
 .top{background:linear-gradient(#256d9f,var(--blue-d));border-bottom:3px solid var(--blue-dd);padding-top:env(safe-area-inset-top)}
 .top-in{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:5.5rem;flex-wrap:wrap;padding-block:.5rem}
 .logo{display:block;color:#fff}
-.logo b{display:block;font-size:2.4rem;font-weight:800;line-height:1.1;text-shadow:0 2px 0 rgba(0,0,0,.18)}
+.logo b{display:block;font-size:2.4rem;font-weight:800;line-height:1.1}
 .logo small{display:block;font-size:.72rem;color:#d7ecfa;margin-top:.15rem}
 .search{display:flex;flex:0 1 22rem;min-width:0;width:100%;max-width:22rem}
 .search input{flex:1;min-width:0;min-height:40px;padding:0 .75rem;border:1px solid var(--blue-dd);border-inline-end:0;background:var(--bg);color:var(--fg);border-radius:0 4px 4px 0}
@@ -40,7 +40,7 @@ button,input{font:inherit}
 .layout{display:grid;grid-template-columns:minmax(0,1fr) 15rem;gap:.75rem;padding-block:.75rem 1.5rem;align-items:start}
 @media(max-width:820px){.layout{grid-template-columns:1fr}.side{order:2}}
 
-.box{background:var(--card);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.box{background:var(--card);border:1px solid var(--line);border-radius:3px}
 .box-h{display:flex;justify-content:space-between;align-items:center;gap:.5rem;padding:.5rem .75rem;background:var(--head);border-bottom:2px solid var(--blue);font-weight:700;color:var(--accent)}
 .box-h .cnt{font-weight:400;font-size:.75rem;color:var(--dim)}
 
@@ -58,6 +58,17 @@ button,input{font:inherit}
 .dl{min-height:34px;padding:0 .8rem;display:inline-grid;place-items:center;background:var(--green);color:#fff;border-radius:3px;font-size:.78rem;border-bottom:2px solid #2b8a43;white-space:nowrap}
 .dl:hover{background:#2f9449}
 .empty{padding:2.5rem 1rem;text-align:center;color:var(--dim)}
+
+/* grid test */
+.rows{display:grid;grid-template-columns:repeat(auto-fill,minmax(7.5rem,1fr));gap:.4rem;padding:.4rem}
+.row,.row:nth-child(even){display:flex;flex-direction:column;align-items:center;text-align:center;gap:.2rem;padding:.5rem .35rem;background:var(--stripe);border:1px solid var(--line);border-radius:4px}
+.row:hover{background:var(--hover)}
+.ic{width:2.2rem;height:2.2rem;font-size:1.2rem;border-radius:5px}
+.tt{width:100%}
+.tt a{font-size:.78rem;line-height:1.5}.tt small{flex-direction:column;align-items:center;gap:0;font-size:.66rem;line-height:1.5}.tt small span:first-child{display:none}
+.dl{width:100%;margin-top:auto;min-height:28px;font-size:.7rem;padding:0 .4rem}
+.empty{grid-column:1/-1}
+@media(max-width:480px){.rows{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
 /* sidebar */
 .side{display:grid;gap:.75rem}
@@ -177,7 +188,7 @@ function countIn(c){return c===ALL?FILES.length:FILES.filter(function(f){return 
 function renderMenus(){
   var nav=$('nav'),cats=$('cats');nav.innerHTML='';cats.innerHTML='';
   [ALL].concat(CATS).forEach(function(c){
-    function pick(){state.category=c;renderMenus();renderRows();window.scrollTo({top:0,behavior:'smooth'})}
+    function pick(){state.category=c;renderMenus();renderRows();window.scrollTo(0,0)}
     var li=document.createElement('li'),b=document.createElement('button');
     b.type='button';b.textContent=c;b.setAttribute('aria-current',String(c===state.category));
     b.addEventListener('click',pick);li.appendChild(b);nav.appendChild(li);
